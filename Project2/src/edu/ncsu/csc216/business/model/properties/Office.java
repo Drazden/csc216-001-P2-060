@@ -11,7 +11,7 @@ import edu.ncsu.csc216.business.model.stakeholders.Client;
  * @author Jacob Robinson
  *
  */
-public class Office extends RentalUnit{
+public class Office extends RentalUnit {
 
 	/** Max capacity for office **/
 	private static final int MAX_CAPACITY = 0;

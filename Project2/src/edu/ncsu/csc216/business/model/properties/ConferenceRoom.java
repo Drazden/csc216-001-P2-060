@@ -36,6 +36,8 @@ public class ConferenceRoom extends RentalUnit {
 	 * @param dur duration
 	 * @param ocu occupants
 	 * @return new Lease
+	 * @throws RentalCapacityException for invalid capacity
+	 * @throws RentalDateException for invalid date
 	 */
 	@Override
 	public Lease reserve(Client cli, LocalDate start, int dur, int ocu) throws RentalCapacityException, RentalDateException{

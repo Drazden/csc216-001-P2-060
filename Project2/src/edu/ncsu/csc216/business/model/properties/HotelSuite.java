@@ -45,7 +45,7 @@ public class HotelSuite extends RentalUnit {
 	 * @throws RentalDateException if start/end dates are not sundays or conflict
 	 */
 	@Override
-	public Lease reserve(Client cli, LocalDate start, int dur, int ocu) {
+	public Lease reserve(Client cli, LocalDate start, int dur, int ocu) throws RentalDateException{
 		return null;
 	}
 

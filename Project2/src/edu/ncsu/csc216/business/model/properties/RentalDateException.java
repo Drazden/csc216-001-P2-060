@@ -5,7 +5,7 @@ package edu.ncsu.csc216.business.model.properties;
  * @author Jacob Robinson
  *
  */
-public class RentalDateException extends Exception{
+public class RentalDateException extends Exception {
 
 	/**
 	 * ID used for serialization

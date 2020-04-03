@@ -25,7 +25,7 @@ public class ConferenceRoom extends RentalUnit {
 	 * @param cap capacity
 	 * @throws IllegalArgumentException if capacity is too large
 	 */
-	public ConferenceRoom(String loc, int cap) {
+	public ConferenceRoom(String loc, int cap) throws RentalCapacityException {
 		super(loc, cap);
 	}
 

@@ -39,9 +39,10 @@ public class Office extends RentalUnit{
 	 * @return new Lease
 	 * @throws RentalDateException if start/end are not on first/last day of month
 	 * @throws RentalCapacityException if capacity is breached
+	 * @throws RentalOutOfServiceException if not in service
 	 */
 	@Override
-	public Lease reserve(Client cli, LocalDate start, int dur, int ocu) {
+	public Lease reserve(Client cli, LocalDate start, int dur, int ocu) throws RentalDateException, RentalCapacityException, RentalOutOfServiceException{
 		return null;
 	}
 

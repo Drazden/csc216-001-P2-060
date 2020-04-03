@@ -213,6 +213,7 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 	
 	/**
 	 * Hashsed int
+	 * @return hashed code
 	 */
 	public int hashCode() {
 		return 0;

@@ -8,6 +8,7 @@ import edu.ncsu.csc216.business.model.stakeholders.Client;
 
 public class Office extends RentalUnit{
 
+	
 	private static final int MAX_CAPACITY = 0;
 	
 	private static final int CAL_ROWS = 0;

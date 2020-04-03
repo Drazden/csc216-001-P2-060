@@ -57,7 +57,7 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	}
 
 	/**
-	 * Clears data from the lsit
+	 * Clears data from the list
 	 */
 	@Override
 	public void clear() {

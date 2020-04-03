@@ -10,7 +10,7 @@ package edu.ncsu.csc216.business.list_utils;
 public class SimpleArrayList<E> implements SimpleList<E> {
 	
 	/** Integer used to resize list if needed **/
-	private static final int RESIZE = 0;
+	private static final int RESIZE = 10;
 	
 	/** List of objects maintained by the ArrayList **/
 	private Object[] list;

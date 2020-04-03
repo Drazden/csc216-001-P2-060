@@ -21,10 +21,11 @@ public class PropertyManager {
 	
 	private SortedLinkedListWithIterator<RentalUnit> rooms;
 	
-	private PropertyManager instance;
+	private static PropertyManager instance;
 	
 	public static PropertyManager getInstance() {
-		return null;
+		return instance;
+		//instance = new PropertyManager();
 	}
 	
 	public Client addNewClient(String name, String id) {

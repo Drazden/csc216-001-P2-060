@@ -14,7 +14,7 @@ public class RentalWriter {
 	 * @param filename String containing name of file to write
 	 * @throws IllegalArgumentException exception thrown if any errors occur
 	 */
-	public static void writeRentalData(String filename) {
+	public static void writeRentalFile(String filename) {
 		//Not yet implemented
 	}
 	

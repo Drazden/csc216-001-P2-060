@@ -86,7 +86,7 @@ public class Client {
 	 * @return cancelled lease
 	 * @throws IllegalArgumentException if index is invalid
 	 */
-	public Lease canceLeaseAt(int idx) {
+	public Lease cancelLeaseAt(int idx) {
 		return null;
 	}
 	

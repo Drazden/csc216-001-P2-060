@@ -12,7 +12,7 @@ import edu.ncsu.csc216.business.model.stakeholders.Client;
  * @author USER
  *
  */
-public abstract class RentalUnit {
+public abstract class RentalUnit implements Comparable<RentalUnit> {
 
 	private static final int MAX_FLOOR = 0;
 	

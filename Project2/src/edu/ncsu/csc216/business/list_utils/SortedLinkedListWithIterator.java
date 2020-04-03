@@ -9,7 +9,7 @@ package edu.ncsu.csc216.business.list_utils;
 public class SortedLinkedListWithIterator<E extends Comparable<E>> implements SortedList<E> {
 	
 	/** First node in the list **/
-	private Node head;
+	private Node<E> head;
 	
 	/**
 	 * Constructs a new list
@@ -126,7 +126,7 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 		private E value;
 		
 		/** next node in list **/
-		private Node next;
+		private Node<E> next;
 		
 		/**
 		 * constructs a new node

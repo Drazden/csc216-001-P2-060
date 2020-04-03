@@ -10,7 +10,7 @@ import edu.ncsu.csc216.business.model.stakeholders.Client;
  * @author Jacob Robinson
  *
  */
-public class Lease {
+public class Lease implements Comparable<Lease> {
 
 	/** Counter for assigning confirmation numbers **/
 	private static int confirmationCounter = 0;
@@ -57,7 +57,7 @@ public class Lease {
 	 * @param end end date 
 	 * @param o occupants
 	 */
-	public Lease(Client c, RentalUnit r, LocalDate start, LocalDate end, int o) {
+	public Lease(Client cl, RentalUnit r, LocalDate start, LocalDate end, int o) {
 		//not yet implented
 	}
 	

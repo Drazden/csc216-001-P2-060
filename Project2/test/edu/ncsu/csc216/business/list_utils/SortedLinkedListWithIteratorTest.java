@@ -1,13 +1,13 @@
 package edu.ncsu.csc216.business.list_utils;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-class SortedLinkedListWithIteratorTest {
+public class SortedLinkedListWithIteratorTest {
 
 	@Test
-	void test() {
+	public void test() {
 		fail("Not yet implemented");
 	}
 

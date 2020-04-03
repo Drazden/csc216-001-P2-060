@@ -26,7 +26,7 @@ public class Client {
 	 * @param id string of clients id
 	 * @throws IllegalArgumentException if either parameter is invalid
 	 */
-	Client(String name, String id) {
+	public Client(String name, String id) {
 		//not yet implemented
 	}
 	

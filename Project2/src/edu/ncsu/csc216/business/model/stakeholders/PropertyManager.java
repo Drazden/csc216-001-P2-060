@@ -72,7 +72,7 @@ public class PropertyManager {
 		return null;
 	}
 	
-	public String[] listClientLeases() {
+	public String[] listClientLeases(int a) {
 		return null;
 	}
 	

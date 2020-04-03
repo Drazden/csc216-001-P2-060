@@ -5,7 +5,7 @@ package edu.ncsu.csc216.business.model.properties;
  * @author Jacob Robinson
  *
  */
-public class RentalUnitOutOfServiceException extends Exception {
+public class RentalOutOfServiceException extends Exception {
 
 	/**
 	 * ID used for serialization
@@ -16,14 +16,14 @@ public class RentalUnitOutOfServiceException extends Exception {
 	 * Constructs with a custom message
 	 * @param message custom string
 	 */
-	public RentalUnitOutOfServiceException(String message) {
+	public RentalOutOfServiceException(String message) {
 		super(message);
 	}
 	
 	/**
 	 * Constructs with default message
 	 */
-	public RentalUnitOutOfServiceException() {
+	public RentalOutOfServiceException() {
 		this("Unit out of service");
 	}
 	

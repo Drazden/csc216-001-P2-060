@@ -115,11 +115,11 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 	 * @param ocu occupants
 	 * @return new Lease
 	 * @throws IllegalArgumentException if null parameters or duration/occupants < 1
-	 * @throws RentalUnitOutOfServiceException if unit is not in service
+	 * @throws RentalOutOfServiceException if unit is not in service
 	 * @throws RentalDateException if dates are invalid (conflicting, improper for kind, out of range)
 	 * @throws RentalCapacityException if occupants exceed capacity
 	 */
-	public abstract Lease reserve(Client cli, LocalDate start, int dur, int ocu) throws IllegalArgumentException, RentalUnitOutOfServiceException, RentalDateException, RentalCapacityException;
+	public abstract Lease reserve(Client cli, LocalDate start, int dur, int ocu) throws IllegalArgumentException, RentalOutOfServiceException, RentalDateException, RentalCapacityException;
 	
 	/**
 	 * Records an existing lease for reading from file
@@ -151,7 +151,7 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 	 * @param dur duration 
 	 * @param ocu occupants
 	 * @throws IllegalArgumentException if parameters are null, ocu/dur < 1
-	 * @throws RentalUnitOutOfServiceException if unit is not in service
+	 * @throws RentalOutOfServiceException if unit is not in service
 	 */
 	protected void checkLeaseConditions(Client cli, LocalDate start, int dur, int ocu) {
 		//Not yet implemented

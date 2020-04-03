@@ -40,7 +40,7 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 	private int capacity;
 	
 	/** A list of leases associated with the unit **/
-	private SortedLinkedListWithIterator<Lease> myLeases;
+	protected SortedLinkedListWithIterator<Lease> myLeases;
 	
 	/**
 	 * Constructs a new RentalUnit at a specified location with specified capacity

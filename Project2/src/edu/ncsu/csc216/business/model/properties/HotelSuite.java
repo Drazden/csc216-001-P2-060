@@ -14,16 +14,15 @@ import edu.ncsu.csc216.business.model.stakeholders.Client;
 public class HotelSuite extends RentalUnit {
 
 	/** max capacity of people for this kind **/
-	private static final int MAX_CAPACITY = 0;
+	public static final int MAX_CAPACITY = 0;
 	
 	/**
 	 * Creates a new hotel suite
 	 * @param loc location
-	 * @param cap capacity
 	 * @throws IllegalArgumentException if capacity is over 2
 	 */
-	public HotelSuite(String loc, int cap) {
-		super(loc, cap);
+	public HotelSuite(String loc) {
+		super(loc, 0);
 	}
 
 	/**

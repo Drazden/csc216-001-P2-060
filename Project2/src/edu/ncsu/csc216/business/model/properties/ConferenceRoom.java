@@ -14,10 +14,10 @@ import edu.ncsu.csc216.business.model.stakeholders.Client;
 public class ConferenceRoom extends RentalUnit {
 
 	/** max capacity of people for this kind **/
-	private static final int MAX_CAPACITY = 0;
+	public static final int MAX_CAPACITY = 0;
 	
 	/** max lease duration for this kind **/
-	private static final int MAX_DURATION = 0;
+	public static final int MAX_DURATION = 0;
 	
 	/**
 	 * Creates a new conference room

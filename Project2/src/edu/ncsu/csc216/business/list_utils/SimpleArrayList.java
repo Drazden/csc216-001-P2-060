@@ -21,7 +21,7 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 	/**
 	 * Construcsts a new SimpleArrayList
 	 */
-	SimpleArrayList() {
+	public SimpleArrayList() {
 		//not yet implemented
 	}
 	

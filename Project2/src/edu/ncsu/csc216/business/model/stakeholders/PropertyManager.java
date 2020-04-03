@@ -24,9 +24,17 @@ public class PropertyManager {
 	private static PropertyManager instance;
 	
 	public static PropertyManager getInstance() {
+		if (instance == null) {
+			instance = new PropertyManager();
+		}
 		return instance;
-		//instance = new PropertyManager();
 	}
+	
+	PropertyManager() {
+		customerBase = new SimpleArrayList<Client>();	
+		rooms = new SortedLinkedListWithIterator<RentalUnit>();
+	}
+
 	
 	public Client addNewClient(String name, String id) {
 		return null;

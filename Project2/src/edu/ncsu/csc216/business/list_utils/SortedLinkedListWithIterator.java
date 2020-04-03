@@ -14,7 +14,7 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	/**
 	 * Constructs a new list
 	 */
-	SortedLinkedListWithIterator() {
+	public SortedLinkedListWithIterator() {
 		//not yet implemented
 	}
 	

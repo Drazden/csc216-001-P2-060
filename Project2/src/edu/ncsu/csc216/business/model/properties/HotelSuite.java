@@ -43,9 +43,10 @@ public class HotelSuite extends RentalUnit {
 	 * @param ocu occupants
 	 * @return new Lease
 	 * @throws RentalDateException if start/end dates are not sundays or conflict
+	 * @throws RentalCapacityException if exceeds capacity
 	 */
 	@Override
-	public Lease reserve(Client cli, LocalDate start, int dur, int ocu) throws RentalDateException{
+	public Lease reserve(Client cli, LocalDate start, int dur, int ocu) throws RentalDateException, RentalCapacityException{
 		return null;
 	}
 

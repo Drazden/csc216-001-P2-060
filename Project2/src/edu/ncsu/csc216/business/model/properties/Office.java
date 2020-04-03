@@ -6,6 +6,11 @@ import edu.ncsu.csc216.business.list_utils.SortedList;
 import edu.ncsu.csc216.business.model.contracts.Lease;
 import edu.ncsu.csc216.business.model.stakeholders.Client;
 
+/**
+ * Represents a office kind of rental unit
+ * @author Jacob Robinson
+ *
+ */
 public class Office extends RentalUnit{
 
 	/** Max capacity for office **/

@@ -7,22 +7,38 @@ import edu.ncsu.csc216.business.list_utils.SortedLinkedListWithIterator;
 import edu.ncsu.csc216.business.model.contracts.Lease;
 import edu.ncsu.csc216.business.model.properties.RentalUnit;
 
+/**
+ * Class that manages the property. Has a list of clients and rooms available to lease.
+ * Can add or remove clients or units, filter by type.
+ * @author Jacob Robinson
+ */
 public class PropertyManager {
 
+	/** Earliest date for a lease **/
 	public static final LocalDate EARLIEST_DATE = null;
 	
+	/** Latest date for a lease **/
 	public static final LocalDate LATEST_DATE = null;
 	
+	/** Filters by kind of unit **/
 	private String kindFilter;
 	
+	/** Filters by unit availability **/
 	private boolean inServiceFilter;
 	
+	/** Array list of clients **/
 	private SimpleArrayList<Client> customerBase;
 	
+	/** LinkedList of rooms **/
 	private SortedLinkedListWithIterator<RentalUnit> rooms;
 	
+	/** Singleton instance of manager **/
 	private static PropertyManager instance;
 	
+	/**
+	 * Gets the instance
+	 * @return instance
+	 */
 	public static PropertyManager getInstance() {
 		if (instance == null) {
 			instance = new PropertyManager();
@@ -30,70 +46,158 @@ public class PropertyManager {
 		return instance;
 	}
 	
+	/**
+	 * Constructs a new manager
+	 * customerBase and rooms are constructed as empty lists
+	 */
 	PropertyManager() {
 		customerBase = new SimpleArrayList<Client>();	
 		rooms = new SortedLinkedListWithIterator<RentalUnit>();
 	}
 
 	
-	public Client addNewClient(String name, String id) {
+	/**
+	 * Adds a new client
+	 * @param name name of client
+	 * @param id unique id
+	 * @return new client
+	 * @throws DuplicateClientException if client already exists
+	 */
+	public Client addNewClient(String name, String id) throws DuplicateClientException{
 		return null;
 	}
 	
-	public RentalUnit addNewUnit(String floor, String room, int cap) {
+	/**
+	 * Adds a new unit
+	 * @param floor floor of unit
+	 * @param room room of unit
+	 * @param cap capacity
+	 * @return new unit
+	 * @throws DuplicateRoomException if unit already exists
+	 */
+	public RentalUnit addNewUnit(String floor, String room, int cap) throws DuplicateRoomException{
 		return null;
 	}
 	
-	public void addLeaseFromFile(Client c, int i, RentalUnit r, LocalDate start, LocalDate end, int e) {
-		
+	/**
+	 * Adds a lease from file 
+	 * @param cli client
+	 * @param con confirmation number
+	 * @param r rentalunit
+	 * @param start start date
+	 * @param end end date
+	 * @param ocu occupants
+	 * @throws IllegalArgumentException for any errors
+	 */
+	public void addLeaseFromFile(Client cli, int con, RentalUnit r, LocalDate start, LocalDate end, int ocu) {
+		//not yet implemented
 	}
 	
-	public void cancelClientsLease(int a, int b) {
-		
+	/**
+	 * Cancel lease for a client
+	 * @param idx index of lease
+	 * @param con confirmation number of lease
+	 */
+	public void cancelClientsLease(int idx, int con) {
+		//not yet implemented
 	}
 	
-	public void returnToService(int a) {
-		
+	/**
+	 * Returns a unit to service
+	 * @param loc location of unit
+	 */
+	public void returnToService(int loc) {
+		//not yet implemented
 	}
 	
-	public RentalUnit removeFromService(int a, LocalDate start) {
+	/**
+	 * Removes a unit from serivce
+	 * @param loc location of unit
+	 * @param start start date
+	 * @return closed unit
+	 */
+	public RentalUnit removeFromService(int loc, LocalDate start) {
 		return null;
 	}
 	
-	public void closeRentalUnit(int a) {
-		
+	/**
+	 * Permanently closes a unit
+	 * @param loc location of unit
+	 */
+	public void closeRentalUnit(int loc) {
+		//not yet implemented
 	}
 	
-	public Lease createLease(int a, int b, LocalDate start, int c, int d) {
+	/**
+	 * Creates a new lease
+	 * @param con confirmation number
+	 * @param cli client
+	 * @param start start date
+	 * @param dur duration
+	 * @param ocu occupants
+	 * @return new lease
+	 */
+	public Lease createLease(int con, int cli, LocalDate start, int dur, int ocu) {
 		return null;
 	}
 	
+	/**
+	 * returns list of clients
+	 * @return string array of clients
+	 */
 	public String[] listClients() {
 		return null;
 	}
 	
-	public String[] listClientLeases(int a) {
+	/**
+	 * returns list of leases
+	 * @param idx index of client
+	 * @return string array of leases
+	 */
+	public String[] listClientLeases(int idx) {
 		return null;
 	}
 	
+	/**
+	 * returns list of units
+	 * @return string array of units
+	 */
 	public String[] listRentalUnits() {
 		return null;
 	}
 	
-	public String[] listLeasesForRentalUnit(int a) {
+	/**
+	 * returns list of leases for unit
+	 * @param idx index of client
+	 * @return string array of leases
+	 */
+	public String[] listLeasesForRentalUnit(int idx) {
 		return null;
 	}
 	
-	public RentalUnit getUnitAtLocation(String a) {
+	/**
+	 * gets a unit from specifed location
+	 * @param loc location of unit
+	 * @return found unit
+	 */
+	public RentalUnit getUnitAtLocation(String loc) {
 		return null;
 	}
 	
-	public void filterRentalUnits(String a, boolean b) {
-		
+	/**
+	 * Filters units by kind or availability
+	 * @param kind type of unit
+	 * @param avail if room is in service
+	 */
+	public void filterRentalUnits(String kind, boolean avail) {
+		//not yet implemented
 	}
 	
+	/**
+	 * Clears all data
+	 */
 	public void flushAllData() { 
-		
+		//not yet implemented
 	}
 	
 }

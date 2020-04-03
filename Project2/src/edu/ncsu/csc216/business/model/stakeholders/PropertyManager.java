@@ -80,7 +80,7 @@ public class PropertyManager {
 		return null;
 	}
 	
-	public String[] listLeasesForRentalUnits(int a) {
+	public String[] listLeasesForRentalUnit(int a) {
 		return null;
 	}
 	

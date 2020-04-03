@@ -103,8 +103,8 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 	/**
 	 * Take this unit out of service
 	 */
-	public void takeOutService() {
-		
+	public void takeOutOfService() {
+		//not yet implemented
 	}
 	
 	/**

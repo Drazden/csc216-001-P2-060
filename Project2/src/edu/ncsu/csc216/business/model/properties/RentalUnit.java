@@ -140,7 +140,7 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 	 * @param end end date
 	 * @throws RentalDateException if the dates are invalid
 	 */
-	public void checkDates(LocalDate start, LocalDate end) {
+	public void checkDates(LocalDate start, LocalDate end) throws RentalDateException {
 		//not yet implemented
 	}
 	

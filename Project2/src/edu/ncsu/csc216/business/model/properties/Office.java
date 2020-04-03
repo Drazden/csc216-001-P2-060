@@ -53,7 +53,7 @@ public class Office extends RentalUnit{
 	 * @param end end date
 	 * @param ocu occupants
 	 * @return new lease
-	 * 	 */
+	 */
 	@Override
 	public Lease recordExistingLease(int con, Client cli, LocalDate start, LocalDate end, int ocu) {
 		return null;
@@ -103,7 +103,7 @@ public class Office extends RentalUnit{
 	 * @param end end date
 	 * @throws RentalDateException if the dates are invalid
 	 */
-	public void checkDates(LocalDate start, LocalDate end) {
+	public void checkDates(LocalDate start, LocalDate end) throws RentalDateException {
 		//not yet implemented
 	}
 

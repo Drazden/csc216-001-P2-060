@@ -38,7 +38,7 @@ public class ConferenceRoom extends RentalUnit {
 	 * @return new Lease
 	 */
 	@Override
-	public Lease reserve(Client cli, LocalDate start, int dur, int ocu) throws RentalCapacityException {
+	public Lease reserve(Client cli, LocalDate start, int dur, int ocu) throws RentalCapacityException, RentalDateException{
 		return null;
 	}
 

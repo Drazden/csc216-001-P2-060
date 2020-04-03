@@ -25,7 +25,7 @@ public class ConferenceRoom extends RentalUnit {
 	 * @param cap capacity
 	 * @throws IllegalArgumentException if capacity is too large
 	 */
-	public ConferenceRoom(String loc, int cap) throws RentalCapacityException {
+	public ConferenceRoom(String loc, int cap) {
 		super(loc, cap);
 	}
 
@@ -38,7 +38,7 @@ public class ConferenceRoom extends RentalUnit {
 	 * @return new Lease
 	 */
 	@Override
-	public Lease reserve(Client cli, LocalDate start, int dur, int ocu) {
+	public Lease reserve(Client cli, LocalDate start, int dur, int ocu) throws RentalCapacityException {
 		return null;
 	}
 

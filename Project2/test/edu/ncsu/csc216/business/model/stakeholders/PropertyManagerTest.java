@@ -8,7 +8,8 @@ class PropertyManagerTest {
 
 	@Test
 	void test() {
-		//fail("Not yet implemented");
+		PropertyManager manager = new PropertyManager();
+		assertEquals(null, manager.listRentalUnits());
 	}
 
 }

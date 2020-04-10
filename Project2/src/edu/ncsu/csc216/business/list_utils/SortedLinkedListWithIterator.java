@@ -240,9 +240,15 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 			return tail;
 		}
 		
-
+		if (start > size()) {
+			throw new IllegalArgumentException();
+		}
 		
-		if (start >= size()) {
+		if (start < 0) {
+			throw new IndexOutOfBoundsException();
+		}
+		
+		if (start == size()) {
 			return tail;
 		}
 		

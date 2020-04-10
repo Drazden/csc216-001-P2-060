@@ -235,16 +235,23 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	public SortedList<E> truncate(int start) {
 		
 		Node<E> trav = head;
+	
+		SortedLinkedListWithIterator<E> tail = new SortedLinkedListWithIterator<E>();
 		
-		int trim = size() - start - 1;
-		
-		for (int i = 0; i < trim; i++) {
+		for (int i = 0; i < start - 1; i++) {
 			trav = trav.next;
 		}
 		
+		Node<E> tailStart = trav.next;
 		trav.next = null;
 		
-		return this;
+		while(tailStart.next != null) {
+			tail.add(tailStart.value);
+			tailStart = tailStart.next;
+		}
+		tail.add(tailStart.value);
+		
+		return tail;
 	}
 
 	/**

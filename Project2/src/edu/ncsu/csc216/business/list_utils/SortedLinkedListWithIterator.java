@@ -207,7 +207,7 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 		if (head != null) {
 			Node<E> trav = head;
 			while(trav.next != null) {
-				ret += trav.value.toString() + ",";
+				ret += trav.value.toString() + " ,";
 				trav = trav.next;
 			}
 			ret += trav.value.toString();

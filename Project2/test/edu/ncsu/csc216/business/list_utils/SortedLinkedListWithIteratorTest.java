@@ -193,7 +193,7 @@ public class SortedLinkedListWithIteratorTest {
 		
 		list.add("A");
 		list.add("B");
-		assertEquals("[A,B]", list.toString());
+		assertEquals("[A, B]", list.toString());
 	}
 	
 	/**

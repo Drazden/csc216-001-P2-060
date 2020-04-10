@@ -15,7 +15,7 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	 * Constructs a new list
 	 */
 	public SortedLinkedListWithIterator() {
-		//not yet implemented
+		head = null;
 	}
 	
 	/**
@@ -24,7 +24,21 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	 */
 	@Override
 	public int size() {
-		return 0;
+		int size = 0;
+		
+		if (head == null) {
+			return size;
+		}
+		
+		
+		Node<E> trav = head;
+		size++;
+		
+		while(trav.next != null) {
+			trav = trav.next;
+			size++;
+		}
+		return size;
 	}
 
 	/**
@@ -33,7 +47,7 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	 */
 	@Override
 	public boolean isEmpty() {
-		return false;
+		return !(size() > 0);
 	}
 
 	/**
@@ -43,6 +57,28 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	 */
 	@Override
 	public boolean contains(E e) {
+		if (head == null) {
+			return false;
+		}
+		
+		Node<E> trav = head;
+		
+		if (trav.value == e) {
+			return true;
+		}
+		
+		while(trav.next != null) {
+			if (trav.value == e) {
+				return true;
+			} else {
+				trav = trav.next;
+			}
+		}
+		
+		if (trav.value == e) {
+			return true;
+		}
+		
 		return false;
 	}
 
@@ -53,7 +89,19 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	 */
 	@Override
 	public boolean add(E e) {
-		return false;
+		Node<E> newNode = new Node<E>(e, null);
+		if (head == null) {
+			head = newNode;
+			return true;
+		}
+		
+		Node<E> trav = head;
+		while (trav.next != null) {
+			trav = trav.next;
+		}
+		trav.next = newNode;
+		return true;
+		
 	}
 
 	/**
@@ -61,7 +109,7 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	 */
 	@Override
 	public void clear() {
-		//not yet implemented
+		head = null;
 	}
 
 	/**
@@ -71,7 +119,14 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	 */
 	@Override
 	public E get(int index) {
-		return null;
+		Node<E> trav = head;
+		
+		for (int i = 0; i < index; i++) {
+			trav = trav.next;
+		}
+		
+		return trav.value;
+		
 	}
 
 	/**
@@ -81,7 +136,33 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	 */
 	@Override
 	public E remove(int index) {
-		return null;
+		if (index == 0) {
+			Node<E> ret = head;
+			if(head.next != null) {
+				head = head.next;
+			} else {
+				head = null;
+			}
+			return ret.value;
+		}
+		
+		
+		Node<E> trav = head;
+		
+		for (int i = 0; i < index - 1; i++) {
+			trav = trav.next;
+		}
+		
+		Node<E> remove = trav.next;
+		
+		
+		if (trav.next.next == null) {
+			trav.next = null;
+		} else {
+			trav.next = trav.next.next;
+		}
+		
+		return remove.value;
 	}
 
 	/**
@@ -101,7 +182,19 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	 */
 	@Override
 	public int indexOf(E e) {
-		return 0;
+		Node<E> trav = head;
+		int counter = 0;
+		
+		while (trav.next != null) {
+			if (trav.value == e) {
+				return counter;
+			} else {
+				trav = trav.next;
+				counter++;
+			}
+		}
+		
+		return -1;
 	}
 	
 	/**
@@ -134,7 +227,9 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 		 * @param next next node in lsit
 		 */
 		Node(E value, Node<E> next) {
-			//Not yet implented
+			traveler = new Cursor();
+			this.value = value;
+			this.next = next;
 		}
 		
 	}
@@ -144,7 +239,7 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	 * @author Jacob Robinson
 	 *
 	 */
-	private class Cursor {
+	private class Cursor implements SimpleListIterator<E> {
 		
 		/**
 		 * checks if there is next value
@@ -152,14 +247,13 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 		 */
 		public boolean hasNext() {
 			return false;
-			
 		}
 		
 		/**
 		 * goes to next value
 		 */
-		public void next() {
-			//not yet implemented
+		public E next() {
+			return null;
 		}
 	}
 }

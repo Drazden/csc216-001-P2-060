@@ -27,24 +27,17 @@ public class SortedLinkedListWithIteratorTest {
 	@Test
 	public void testSize() {
 		SortedLinkedListWithIterator<String> list = new SortedLinkedListWithIterator<String>();
-		
+
 		//New list should have size of 0
 		assertEquals(0, list.size());
 		
-		list.add("String");
+		//Adding should increase size
+		list.add("A");
 		assertEquals(1, list.size());
 		
-		
-		list.add("String1");
-		assertEquals(2, list.size());
-		
-		
-		list.remove(0);
-		assertEquals(1, list.size());
-		
+		//Removing should decrease size
 		list.remove(0);
 		assertEquals(0, list.size());
-		
 	}
 	
 	/**
@@ -57,9 +50,11 @@ public class SortedLinkedListWithIteratorTest {
 		//New list should be empty
 		assertTrue(list.isEmpty());
 		
-		list.add("String");
+		//Adding should signal its no longer empty
+		list.add("A");
 		assertFalse(list.isEmpty());
 		
+		//Removing all should return to empty
 		list.remove(0);
 		assertTrue(list.isEmpty());
 	}
@@ -70,19 +65,20 @@ public class SortedLinkedListWithIteratorTest {
 	@Test
 	public void testContains() {
 		SortedLinkedListWithIterator<String> list = new SortedLinkedListWithIterator<String>();
+
 		
 		//New list should not contain anything
-		assertEquals(false, list.contains("String"));
+		assertFalse(list.contains("A"));
 		
-		list.add("String");
+		//Should return true if element is in list
+		list.add("A");
+		list.add("B");
+		assertTrue(list.contains("A"));
+		assertTrue(list.contains("B"));
 		
-		assertEquals(true, list.contains("String"));
-		
-		assertEquals(false, list.contains("String1"));
-		
-		list.add("String1");
-		
-		assertEquals(true, list.contains("String1"));
+		//Should return false if element is not in list
+		assertFalse(list.contains("C"));
+
 	}
 	
 	/**
@@ -92,15 +88,21 @@ public class SortedLinkedListWithIteratorTest {
 	public void testAdd() {
 		SortedLinkedListWithIterator<String> list = new SortedLinkedListWithIterator<String>();
 		
-		list.add("String");
-		assertEquals("String", list.get(0));
+		//Empty so should go to index 0
+		list.add("C");
+		assertEquals("C", list.get(0));
 		
-		list.add("String1");
-		assertEquals("String1", list.get(1));
+		//A before C, A should be at index 0
+		list.add("A");
+		assertEquals("A", list.get(0));
 		
-		list.remove(0);
-		list.add("String2");
-		assertEquals("String2", list.get(1));
+		//B after A but before C, should be at index 1
+		list.add("B");
+		assertEquals("B", list.get(1));
+		
+		//D after all, should be at last index
+		list.add("D");
+		assertEquals("D", list.get(3));
 	}
 	
 	/**
@@ -110,10 +112,11 @@ public class SortedLinkedListWithIteratorTest {
 	public void testClear() {
 		SortedLinkedListWithIterator<String> list = new SortedLinkedListWithIterator<String>();
 		
-		list.add("String");
+		list.add("A");
 		
 		list.clear();
 		
+		//Cleared list should be empty
 		assertTrue(list.isEmpty());
 	}
 	
@@ -123,16 +126,26 @@ public class SortedLinkedListWithIteratorTest {
 	@Test
 	public void testGet() {
 		SortedLinkedListWithIterator<String> list = new SortedLinkedListWithIterator<String>();
+
+		//Should throw IOOBE for invalid index
+		try {
+			list.get(-1);
+		} catch (IndexOutOfBoundsException e) {
+			e.getMessage();
+		}
 		
-		list.add("String");
+		try {
+			list.get(1);
+		} catch (IndexOutOfBoundsException e) {
+			e.getMessage();
+		}
 		
-		assertEquals("String", list.get(0));
-		
-		list.add("String1");
-		
-		assertEquals("String1", list.get(1));
-		
-		
+		//Should get element at index
+		list.add("A");
+		list.add("B");
+		assertEquals("A", list.get(0));
+		assertEquals("B", list.get(1));
+
 	}
 	
 	/**
@@ -141,24 +154,41 @@ public class SortedLinkedListWithIteratorTest {
 	@Test
 	public void testRemove() {
 		SortedLinkedListWithIterator<String> list = new SortedLinkedListWithIterator<String>();
+
+		//Should throw IOOBE for invalid index
+		try {
+			list.remove(-1);
+		} catch (IndexOutOfBoundsException e) {
+			e.getMessage();
+		}
 		
-		list.add("String");
-		
-		list.add("String2");
-		
-		list.add("String3");
-		
-		assertEquals("String2", list.remove(1));
-		assertEquals("String", list.get(0));
-		assertEquals("String3", list.get(1));
-		
-		assertEquals("String", list.remove(0));
-		assertEquals("String3", list.get(0));		
+		try {
+			list.remove(1);
+		} catch (IndexOutOfBoundsException e) {
+			e.getMessage();
+		}
 		
 		
+		//Tests that elements are properly shifted when removed
+		list.add("A");
+		list.add("B");
+		list.add("C");
+		list.add("D");
+		
+		assertEquals("A", list.remove(0));
+		assertEquals("B", list.get(0));
+		
+		assertEquals("C", list.remove(1));
+		assertEquals("D", list.get(1));
 	}
 	
-	//TODO truncate
+	/**
+	 * Tests truncate method
+	 */
+	@Test
+	public void testTruncate() {
+		
+	}
 	
 	/**
 	 * Tests indexOf method
@@ -167,15 +197,17 @@ public class SortedLinkedListWithIteratorTest {
 	public void testIndexOf() {
 		SortedLinkedListWithIterator<String> list = new SortedLinkedListWithIterator<String>();
 
-		assertEquals(-1, list.indexOf("String"));
+		//Should return -1 if list is empty
+		assertEquals(-1, list.indexOf("A"));
 		
-		list.add("String");
-		assertEquals(0, list.indexOf("String"));
+		//Should return proper index
+		list.add("A");
+		list.add("B");
+		assertEquals(0, list.indexOf("A"));
+		assertEquals(1, list.indexOf("B"));
 		
-		assertEquals(-1, list.indexOf("String1"));
-		
-		list.add("String1");
-		assertEquals(1, list.indexOf("String1"));
+		//Returns -1 if not found
+		assertEquals(-1, list.indexOf("C"));
 	}
 	
 

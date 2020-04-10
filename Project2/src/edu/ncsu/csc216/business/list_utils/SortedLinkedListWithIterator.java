@@ -93,26 +93,33 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	 */
 	@Override
 	public boolean add(E e) {
-		Node<E> newNode = new Node<E>(e, null);
+		Node<E> add = new Node<E>(e, null);
 		if (head == null) {
-			head = newNode;
+			head = add;
+			return true;
+		} else if (add.value.compareTo(head.value) < 0) {
+			add.next = head;
+			head = add;
+			return true;
+		} else {
+			Cursor cursor = new Cursor();
+			Node<E> trav = head;
+			Node<E> prev = null;
+			while(cursor.hasNext()) {
+				prev = trav;
+				trav = trav.next;
+				if (add.value.compareTo(cursor.next()) < 0) {
+					add.next = trav;
+					if (prev != null) {
+						prev.next = add;
+					}
+					return true;
+				}
+				
+			}
+			trav.next = add;
 			return true;
 		}
-		
-		Node<E> trav = head;
-		while (trav.next != null) {
-			trav = trav.next;
-		}
-		trav.next = newNode;
-		
-		Cursor cursor = new Cursor();
-		cursor.next();
-		
-		
-		return true;
-		
-		
-		
 	}
 
 	/**
@@ -233,11 +240,12 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	}
 	
 	/**
-	 * Iterates the list
-	 * @return iterator
+	 * Gets a new iterato
+	 * @return new cursor
 	 */
 	public SimpleListIterator<E> iterator() {
-		return null;
+		Cursor cursor = new Cursor();
+		return cursor;
 	}
 
 	/**
@@ -272,7 +280,7 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	 */
 	private class Cursor implements SimpleListIterator<E> {
 		
-		public Node<E> traveller;
+		private Node<E> traveller;
 		
 		Cursor() {
 			traveller = head;
@@ -283,7 +291,7 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 		 * @return true if yes, false if no
 		 */
 		public boolean hasNext() {
-			return traveller != null;
+			return traveller.next != null;
 		}
 		
 		/**

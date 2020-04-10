@@ -324,6 +324,9 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 		 * @return true if yes, false if no
 		 */
 		public boolean hasNext() {
+			if (traveller == null) {
+				return false;
+			}
 			return traveller.next != null;
 		}
 		
@@ -335,9 +338,6 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 		public E next() {
 			if (hasNext()) {
 				traveller = traveller.next;
-				if (traveller.value == null) {
-					return null;
-				}
 				return traveller.value;
 			} else {
 				throw new NoSuchElementException();

@@ -74,6 +74,7 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 	 * @param e element to be added
 	 * @return true if added, false if not
 	 * @throws NullPointerException if e is null or empty
+	 * @throws IllegalArgumentException if list contains e
 	 */
 	@Override
 	public boolean add(E e) {
@@ -82,7 +83,7 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 		}
 		
 		if (contains(e)) {
-			return false;
+			throw new IllegalArgumentException();
 		}
 		
 		if (size + 1 > list.length) {

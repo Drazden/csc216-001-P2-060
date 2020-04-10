@@ -97,7 +97,11 @@ public class SimpleArrayListTest {
 		assertTrue(list.contains("String"));
 		
 		//Duplicate item should not be added
-		assertFalse(list.add("String"));
+		try {
+			assertFalse(list.add("String"));
+		} catch (IllegalArgumentException e) {
+			e.getMessage();
+		}
 		
 		//Tests for adding at index
 		//Adding at negative idx should throw IOOBE

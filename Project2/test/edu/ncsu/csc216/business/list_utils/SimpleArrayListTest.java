@@ -148,4 +148,77 @@ public class SimpleArrayListTest {
 		//Reaching capacity
 		list.add("String4");
 	}
+	
+	/**
+	 * Tests remove method
+	 */
+	@Test
+	public void testRemove() {
+		SimpleArrayList<String> list = new SimpleArrayList<String>(12);
+		
+		//Should not be able to remove on empty list
+		try {
+			list.remove(0);
+		} catch (IndexOutOfBoundsException e) {
+			e.getMessage();
+		}
+		
+		list.add("String");
+		//Cant remove at idx < 0 or above size
+		try {
+			list.remove(-1);
+		} catch (IndexOutOfBoundsException e) {
+			e.getMessage();
+		}
+		
+		try {
+			list.remove(2);
+		} catch (IndexOutOfBoundsException e) {
+			e.getMessage();
+		}
+		
+		
+		//Adds after to check shift
+		list.add("String1");
+		assertEquals("String", list.remove(0));
+		assertEquals("String1", list.get(0));
+	}
+	
+	/**
+	 * Tests get method
+	 */
+	@Test
+	public void testGet() {
+		SimpleArrayList<String> list = new SimpleArrayList<String>(12);
+		
+		//Cannot get at invalid index
+		try {
+			list.get(-1);
+		} catch (IndexOutOfBoundsException e) {
+			e.getMessage();
+		}
+		
+		try {
+			list.get(2);
+		} catch (IndexOutOfBoundsException e) {
+			e.getMessage();
+		}
+		
+		list.add("String");
+		assertEquals("String", list.get(0));
+	}
+	
+	/**
+	 * Tests index of method
+	 */
+	@Test
+	public void testIndexOf() {
+		SimpleArrayList<String> list = new SimpleArrayList<String>(12);
+
+		//Returns -1 if not found
+		assertEquals(-1, list.indexOf("String"));
+		
+		list.add("String");
+		assertEquals(0, list.indexOf("String"));
+	}
 }

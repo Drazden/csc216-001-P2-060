@@ -63,7 +63,6 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 	 * Checks if the list contains a certain element e
 	 * @param e element to check list for
 	 * @return true if list contains e, false if it doesnt
-	 * @throws IllegalArgumentException if provided element is null or empty
 	 */
 	@Override
 	public boolean contains(E e) {
@@ -146,9 +145,10 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 		
 		
 		Object removed = list[idx];
+		list[idx] = null;
 		
-		for (int i = 0; i >= idx; i--) {
-			list[i + 1] = list[i];
+		for (int i = idx; i < size; i++) {
+			list[i] = list[i + 1];
 		}
 		
 		size--;

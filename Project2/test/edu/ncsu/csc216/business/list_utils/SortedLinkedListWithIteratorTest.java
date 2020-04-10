@@ -189,11 +189,11 @@ public class SortedLinkedListWithIteratorTest {
 	public void testToString() {
 		SortedLinkedListWithIterator<String> list = new SortedLinkedListWithIterator<String>();
 		//Empty list empty string
-		assertEquals("", list.toString());
+		assertEquals("[]", list.toString());
 		
 		list.add("A");
 		list.add("B");
-		assertEquals("A,B", list.toString());
+		assertEquals("[A,B]", list.toString());
 	}
 	
 	/**
@@ -202,15 +202,8 @@ public class SortedLinkedListWithIteratorTest {
 	@Test
 	public void testTruncate() {
 		SortedLinkedListWithIterator<String> list = new SortedLinkedListWithIterator<String>();
-		SortedLinkedListWithIterator<String> list2 = new SortedLinkedListWithIterator<String>();
 
 		
-		list.add("A");
-		list.add("B");
-		
-		list2.add("A");
-		
-		assertEquals(list2.get(0), list.truncate(1).get(0));
 		
 		
 	}

@@ -140,7 +140,7 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public E remove(int idx) {
-		if (size == 0 || idx < 0 || idx > size) {
+		if (size == 0 || idx < 0 || idx >= size) {
 			throw new IndexOutOfBoundsException();
 		}
 		
@@ -165,7 +165,7 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public E get(int idx) {
-		if (idx < 0 || idx > size) {
+		if (idx < 0 || idx > size - 1) {
 			throw new IndexOutOfBoundsException();
 		}
 		return (E) list[idx];

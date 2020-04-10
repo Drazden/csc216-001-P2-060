@@ -77,9 +77,9 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 	 */
 	@Override
 	public boolean add(E e) {
-		if (e == null || e.equals("")) {
-			throw new IllegalArgumentException();
-		}
+		//if (e == null || e.equals("")) {
+		//	throw new IllegalArgumentException();
+		//}
 		
 		if (contains(e)) {
 			return false;
@@ -108,9 +108,9 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 			throw new IndexOutOfBoundsException();
 		}
 		
-		if (e == null || e.equals("")) {
-			throw new IllegalArgumentException();
-		}
+		//if (e == null || e.equals("")) {
+		//	throw new IllegalArgumentException();
+		//}
 		
 		if (contains(e)) {
 			throw new IllegalArgumentException();

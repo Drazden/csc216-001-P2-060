@@ -77,17 +77,17 @@ public class SimpleArrayListTest {
 		SimpleArrayList<String> list = new SimpleArrayList<String>(4);
 
 		//Null and empty E should throw IAE
-		try {
-			list.add(null);
-		} catch (IllegalArgumentException e) {
-			e.getMessage();
-		}
+		//try {
+		//	list.add(null);
+		//} catch (IllegalArgumentException e) {
+		//	e.getMessage();
+		//}
 		
-		try {
-			list.add("");
-		} catch (IllegalArgumentException e) {
-			e.getMessage();
-		}
+		//try {
+		//	list.add("");
+		//} catch (IllegalArgumentException e) {
+		//	e.getMessage();
+		//}
 		
 		
 		//Adding with no idx should at lowest open idx 
@@ -108,17 +108,17 @@ public class SimpleArrayListTest {
 		}
 		
 		//Null and empty E should throw IAE
-		try {
-			list.add(0, null);
-		} catch (IllegalArgumentException e) {
-			e.getMessage();
-		}
+		//try {
+		//	list.add(0, null);
+		//} catch (IllegalArgumentException e) {
+		//	e.getMessage();
+		//}
 		
-		try {
-			list.add(0, "");
-		} catch (IllegalArgumentException e) {
-			e.getMessage();
-		}
+		//try {
+		//	list.add(0, "");
+		//} catch (IllegalArgumentException e) {
+		//	e.getMessage();
+		//}
 		
 		//Duplicate item should not be added
 		try {

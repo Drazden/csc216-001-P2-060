@@ -236,9 +236,12 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 		SortedLinkedListWithIterator<E> tail = new SortedLinkedListWithIterator<E>();
 
 		if (head == null) {
-			return  tail;
+			return tail;
 		}
 		
+		if (start > size()) {
+			return tail;
+		}
 		
 		Node<E> trav = head;
 	

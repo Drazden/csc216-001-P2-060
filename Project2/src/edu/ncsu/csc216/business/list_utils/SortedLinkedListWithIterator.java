@@ -202,8 +202,16 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	 */
 	@Override
 	public String toString() {
-		
-		return null;
+		String ret = new String();
+		if (head != null) {
+			Node<E> trav = head;
+			while(trav.next != null) {
+				ret += trav.value.toString() + ",";
+				trav = trav.next;
+			}
+			ret += trav.value.toString();
+		}
+		return ret;
 		
 	}
 
@@ -215,8 +223,12 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	@Override
 	public SortedList<E> truncate(int start) {
 		Node<E> trav = head;
+		head = null;
 		for (int i = 0; i < start; i++) {
+			head = trav;
 			trav = trav.next;
+			
+			
 		}
 		return this;
 	}

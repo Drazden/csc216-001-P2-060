@@ -183,6 +183,20 @@ public class SortedLinkedListWithIteratorTest {
 	}
 	
 	/**
+	 * Tests to string method
+	 */
+	@Test
+	public void testToString() {
+		SortedLinkedListWithIterator<String> list = new SortedLinkedListWithIterator<String>();
+		//Empty list empty string
+		assertEquals("", list.toString());
+		
+		list.add("A");
+		list.add("B");
+		assertEquals("A,B", list.toString());
+	}
+	
+	/**
 	 * Tests truncate method
 	 */
 	@Test

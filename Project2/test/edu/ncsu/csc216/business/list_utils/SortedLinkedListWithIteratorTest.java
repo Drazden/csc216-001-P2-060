@@ -203,7 +203,16 @@ public class SortedLinkedListWithIteratorTest {
 	public void testTruncate() {
 		SortedLinkedListWithIterator<String> list = new SortedLinkedListWithIterator<String>();
 		assertEquals(0, list.size());
-		list.truncate(0);
+		
+		list.add("A");
+		list.add("B");
+		list.add("C");
+		list.add("D");
+		list.add("E");
+		list.add("F");
+		list.add("G");
+		list.truncate(3);
+		assertEquals(4, list.size());
 
 	}
 

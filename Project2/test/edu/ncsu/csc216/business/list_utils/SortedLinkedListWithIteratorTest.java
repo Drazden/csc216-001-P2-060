@@ -229,12 +229,13 @@ public class SortedLinkedListWithIteratorTest {
 
 	/**
 	 * Tests cursor
-	 *//*
-		 * @Test public void testIterator() { SortedLinkedListWithIterator<String> list
-		 * = new SortedLinkedListWithIterator<String>();
-		 * 
-		 * list.add("A"); list.iterator().next();
-		 * 
-		 * }
-		 */
+	 */
+	@Test 
+	public void testIterator() { 
+		SortedLinkedListWithIterator<String> list = new SortedLinkedListWithIterator<String>();
+		list.add("A"); 
+		list.add("B");
+		list.add("C");
+		assertEquals("A", list.iterator().next());
+	}
 }

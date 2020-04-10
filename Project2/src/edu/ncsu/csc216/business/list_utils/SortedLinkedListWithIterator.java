@@ -104,14 +104,24 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 			add.next = head;
 			head = add;
 			return true;
+		} else if (head.next == null) {
+			head.next = add;
+			return true;
 		} else {
 			Cursor cursor = new Cursor();
 			Node<E> trav = head;
 			Node<E> prev = null;
 			while(cursor.hasNext()) {
+				if (trav.next == null) {
+					trav.next = add;
+					return true;
+				}
+				
 				prev = trav;
 				trav = trav.next;
-				if (add.value.compareTo(cursor.next()) < 0) {
+				
+				
+				if (add.value.compareTo(trav.value) < 0) {
 					add.next = trav;
 					if (prev != null) {
 						prev.next = add;
@@ -120,8 +130,7 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 				}
 				
 			}
-			trav.next = add;
-			return true;
+			return false;
 		}
 	}
 
@@ -337,8 +346,9 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 		 */
 		public E next() {
 			if (hasNext()) {
+				E val = traveller.value;
 				traveller = traveller.next;
-				return traveller.value;
+				return val;
 			} else {
 				throw new NoSuchElementException();
 			}

@@ -212,7 +212,7 @@ public class SortedLinkedListWithIteratorTest {
 		list.add("F");
 		list.add("G");
 		list.truncate(3);
-		assertEquals(4, list.size());
+		assertEquals(5, list.size());
 
 	}
 

@@ -230,18 +230,22 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	 * Truncates the list
 	 * @param start where to truncate
 	 * @return truncated list
+	 * @throws IndexOutOfBoundsException if index is not in range
 	 */
 	@Override
 	public SortedList<E> truncate(int start) {
+		if (start < 1 || start >= size()) {
+			throw new IndexOutOfBoundsException();
+		}
 		SortedLinkedListWithIterator<E> tail = new SortedLinkedListWithIterator<E>();
 
 		if (head == null) {
 			return tail;
 		}
 		
-		if (start > size()) {
-			return tail;
-		}
+		//if (start == size()) {
+		//	return tail;
+		//}
 		
 		Node<E> trav = head;
 	

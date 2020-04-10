@@ -73,13 +73,13 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 	 * Adds element e to the list
 	 * @param e element to be added
 	 * @return true if added, false if not
-	 * @throws IllegalArgumentException if e is null or empty
+	 * @throws NullPointerException if e is null or empty
 	 */
 	@Override
 	public boolean add(E e) {
-		//if (e == null || e.equals("")) {
-		//	throw new IllegalArgumentException();
-		//}
+		if (e == null || e.equals("")) {
+			throw new NullPointerException();
+		}
 		
 		if (contains(e)) {
 			return false;
@@ -99,8 +99,9 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 	 * Adds element e to the list
 	 * @param idx index for element to be added
 	 * @param e element to be added
-	 * @throws IllegalArgumentException if e is null or empty, or if list contains e
+	 * @throws IllegalArgumentException if list contains e
 	 * @throws IndexOutOfBoundsException if idx is less than 0
+	 * @throws NullPointerException if e is null or empty
 	 */
 	@Override
 	public void add(int idx, E e) {
@@ -108,9 +109,9 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 			throw new IndexOutOfBoundsException();
 		}
 		
-		//if (e == null || e.equals("")) {
-		//	throw new IllegalArgumentException();
-		//}
+		if (e == null || e.equals("")) {
+			throw new NullPointerException();
+		}
 		
 		if (contains(e)) {
 			throw new IllegalArgumentException();

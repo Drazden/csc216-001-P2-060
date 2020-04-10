@@ -234,13 +234,15 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	 */
 	@Override
 	public SortedList<E> truncate(int start) {
-		if (start < 1 || start >= size()) {
-			throw new IndexOutOfBoundsException();
-		}
+		
 		SortedLinkedListWithIterator<E> tail = new SortedLinkedListWithIterator<E>();
 
 		if (head == null) {
 			return tail;
+		}
+		
+		if (start < 1 || start >= size()) {
+			throw new IndexOutOfBoundsException();
 		}
 		
 		//if (start == size()) {

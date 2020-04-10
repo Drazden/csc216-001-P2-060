@@ -277,9 +277,6 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	 * @return new cursor
 	 */
 	public SimpleListIterator<E> iterator() {		
-		if (head == null) {
-			head = new Node<E>(null, head);
-		}
 		Cursor cursor = new Cursor();
 		return cursor;
 	}
@@ -338,6 +335,9 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 		public E next() {
 			if (hasNext()) {
 				traveller = traveller.next;
+				if (traveller.value == null) {
+					return null;
+				}
 				return traveller.value;
 			} else {
 				throw new NoSuchElementException();

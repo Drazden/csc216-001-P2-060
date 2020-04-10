@@ -33,7 +33,7 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 	 * @throws IllegalArgumentException if capacity is less than 0
 	 */
 	SimpleArrayList(int capacity) {
-		if (capacity < 0) {
+		if (capacity < 1) {
 			throw new IllegalArgumentException();
 		}
 		
@@ -105,7 +105,7 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 	 */
 	@Override
 	public void add(int idx, E e) {
-		if (idx < 0) {
+		if (idx < 0 || idx > size) {
 			throw new IndexOutOfBoundsException();
 		}
 		
@@ -132,15 +132,22 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 
 	/**
 	 * Removes element from list
-	 * @param index location of element to be removed
+	 * @param idx location of element to be removed
 	 * @return element removed
+	 * @throws IndexOutOfBoundsException if index is less than 0 or above size or list is empty
+	 * 
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public E remove(int index) {
-		Object removed = list[index];
+	public E remove(int idx) {
+		if (size == 0 || idx < 0 || idx > size) {
+			throw new IndexOutOfBoundsException();
+		}
 		
-		for (int i = 0; i >= index; i--) {
+		
+		Object removed = list[idx];
+		
+		for (int i = 0; i >= idx; i--) {
 			list[i + 1] = list[i];
 		}
 		
@@ -152,10 +159,15 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 	 * Gets element from list
 	 * @param idx location of element to get
 	 * @return element found
+	 * @throws IndexOutOfBoundsException if index is less than 0 or over size
+	 * 
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public E get(int idx) {
+		if (idx < 0 || idx > size) {
+			throw new IndexOutOfBoundsException();
+		}
 		return (E) list[idx];
 	}
 

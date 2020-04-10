@@ -194,13 +194,17 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	}
 
 	/**
-	 * Truncates two lists together
-	 * @param start of list
-	 * @return truncated lists
+	 * Truncates the list
+	 * @param start where to truncate
+	 * @return truncated list
 	 */
 	@Override
 	public SortedList<E> truncate(int start) {
-		return null;
+		Node<E> trav = head;
+		for (int i = 0; i < start; i++) {
+			trav = trav.next;
+		}
+		return this;
 	}
 
 	/**

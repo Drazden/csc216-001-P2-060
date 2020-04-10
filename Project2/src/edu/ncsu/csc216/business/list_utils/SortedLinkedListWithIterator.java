@@ -349,6 +349,10 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 				E val = traveller.value;
 				traveller = traveller.next;
 				return val;
+			} else if (traveller != null) {
+				E val = traveller.value;
+				traveller = null;
+				return val;
 			} else {
 				throw new NoSuchElementException();
 			}

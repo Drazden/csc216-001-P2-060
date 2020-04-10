@@ -268,8 +268,14 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	 * @return new cursor
 	 */
 	public SimpleListIterator<E> iterator() {		
-		Cursor cursor = new Cursor();
-		return cursor;
+		try {
+			Cursor cursor = new Cursor();
+			return cursor;
+		} catch (NullPointerException e) {
+			e.getMessage();
+		}
+		return null;
+		
 	}
 
 	/**

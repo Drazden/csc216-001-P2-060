@@ -10,7 +10,7 @@ package edu.ncsu.csc216.business.list_utils;
 public class SimpleArrayList<E> implements SimpleList<E> {
 	
 	/** Integer used to resize list if needed **/
-	private static final int RESIZE = 10;
+	private static final int RESIZE = 12;
 	
 	/** List of objects maintained by the ArrayList **/
 	private Object[] list;
@@ -22,15 +22,23 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 	 * Construcsts a new SimpleArrayList
 	 */
 	public SimpleArrayList() {
-		//not yet implemented
+		list = new Object[RESIZE];
+		size = 0;
+		
 	}
 	
 	/**
-	 * Constructs a new SimpleArrayList with provided size
-	 * @param size to set list to
+	 * Constructs a new SimpleArrayList with provided capacity
+	 * @param capacity to set list to
+	 * @throws IllegalArgumentException if capacity is less than 0
 	 */
-	SimpleArrayList(int size) {
-		//not yet implemented
+	SimpleArrayList(int capacity) {
+		if (capacity < 0) {
+			throw new IllegalArgumentException();
+		}
+		
+		list = new Object[capacity];
+		
 	}
 	
 	/**
@@ -39,7 +47,7 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 	 */
 	@Override
 	public int size() {
-		return 0;
+		return size;
 	}
 
 	/**
@@ -48,36 +56,78 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 	 */
 	@Override
 	public boolean isEmpty() {
-		return false;
+		return !(size > 0);
 	}
 
 	/**
 	 * Checks if the list contains a certain element e
 	 * @param e element to check list for
 	 * @return true if list contains e, false if it doesnt
+	 * @throws IllegalArgumentException if provided element is null or empty
 	 */
 	@Override
 	public boolean contains(E e) {
-		return false;
+		return indexOf(e) != -1;
 	}
 
 	/**
 	 * Adds element e to the list
 	 * @param e element to be added
 	 * @return true if added, false if not
+	 * @throws IllegalArgumentException if e is null or empty
 	 */
 	@Override
 	public boolean add(E e) {
-		return false;
+		if (e == null || e.equals("")) {
+			throw new IllegalArgumentException();
+		}
+		
+		if (contains(e)) {
+			return false;
+		}
+		
+		if (size + 1 > list.length) {
+			grow();
+		}
+		
+		list[size] = e;
+		size++;
+		
+		return true;
 	}
 
 	/**
 	 * Adds element e to the list
+	 * @param idx index for element to be added
 	 * @param e element to be added
+	 * @throws IllegalArgumentException if e is null or empty, or if list contains e
+	 * @throws IndexOutOfBoundsException if idx is less than 0
 	 */
 	@Override
-	public void add(int pos, E e) {
-		//Not yet implemented
+	public void add(int idx, E e) {
+		if (idx < 0) {
+			throw new IndexOutOfBoundsException();
+		}
+		
+		if (e == null || e.equals("")) {
+			throw new IllegalArgumentException();
+		}
+		
+		if (contains(e)) {
+			throw new IllegalArgumentException();
+		}
+		
+		if (size + 1 > list.length) {
+			grow();
+		}
+		
+		for(int i = size - 1; i >= idx; i--) {
+			list[i + 1] = list[i];
+		}
+		
+		
+		list[idx] = e;
+		size++;
 	}
 
 	/**
@@ -85,19 +135,28 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 	 * @param index location of element to be removed
 	 * @return element removed
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public E remove(int index) {
-		return null;
+		Object removed = list[index];
+		
+		for (int i = 0; i >= index; i--) {
+			list[i + 1] = list[i];
+		}
+		
+		size--;
+		return (E) removed;
 	}
 
 	/**
 	 * Gets element from list
-	 * @param pos location of element to get
+	 * @param idx location of element to get
 	 * @return element found
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public E get(int pos) {
-		return null;
+	public E get(int idx) {
+		return (E) list[idx];
 	}
 
 	/**
@@ -107,7 +166,28 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 	 */
 	@Override
 	public int indexOf(E e) {
-		return 0;
+		int idx = -1;
+		
+		for (int i = 0; i < size; i++) {
+			if (list[i] == e) {
+				idx = i;
+			}
+		}
+		
+		return idx;
+	}
+	
+	/**
+	 * Grows list to lenght + resize if needed
+	 */
+	private void grow() {
+		Object[] newList = new Object[list.length + RESIZE];
+		
+		for (int i = 0; i < size; i++) {
+			newList[i] = list[i];
+		}
+		
+		list = newList;
 	}
 
 }

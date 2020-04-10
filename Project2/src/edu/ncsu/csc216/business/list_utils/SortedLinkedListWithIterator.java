@@ -224,7 +224,7 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	 */
 	@Override
 	public SortedList<E> truncate(int start) {
-	
+		return null;
 	}
 
 	/**

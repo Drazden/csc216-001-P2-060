@@ -240,7 +240,7 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 		}
 		
 		if (start > size()) {
-			return null;
+			return tail;
 		}
 		
 		Node<E> trav = head;

@@ -90,6 +90,7 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	 * Adds element e to the list
 	 * @param e element to be added
 	 * @return true if added, false if not
+	 * @throws IllegalArgumentException for duplicat element
 	 */
 	@Override
 	public boolean add(E e) {
@@ -97,6 +98,8 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 		if (head == null) {
 			head = add;
 			return true;
+		} else if (contains(e)) {
+			throw new IllegalArgumentException();
 		} else if (add.value.compareTo(head.value) < 0) {
 			add.next = head;
 			head = add;
@@ -191,6 +194,17 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 		}
 		
 		return remove.value;
+	}
+	
+	/**
+	 * Returns list as string
+	 * @return string representation
+	 */
+	@Override
+	public String toString() {
+		
+		return null;
+		
 	}
 
 	/**

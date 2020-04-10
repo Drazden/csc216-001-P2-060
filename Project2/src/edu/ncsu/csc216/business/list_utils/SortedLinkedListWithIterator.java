@@ -1,5 +1,7 @@
 package edu.ncsu.csc216.business.list_utils;
 
+import java.util.NoSuchElementException;
+
 /**
  * This class is a linkedlist that uses the sortedlist interface and the simplelistiterator.
  * It contains methods for manipulation of data in the list and two inner classes, node and cursor.
@@ -16,6 +18,8 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	 */
 	public SortedLinkedListWithIterator() {
 		head = null;
+		
+		
 	}
 	
 	/**
@@ -100,7 +104,14 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 			trav = trav.next;
 		}
 		trav.next = newNode;
+		
+		Cursor cursor = new Cursor();
+		cursor.next();
+		
+		
 		return true;
+		
+		
 		
 	}
 
@@ -236,9 +247,6 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	 */
 	private class Node<E> {
 		
-		/** nodes instance of cursor **/
-		private Cursor traveler;
-		
 		/** value in the node **/
 		private E value;
 		
@@ -251,7 +259,6 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 		 * @param next next node in lsit
 		 */
 		Node(E value, Node<E> next) {
-			traveler = new Cursor();
 			this.value = value;
 			this.next = next;
 		}
@@ -265,19 +272,32 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	 */
 	private class Cursor implements SimpleListIterator<E> {
 		
-		/**
-		 * checks if there is next value
-		 * @return true if yes, false if no
-		 */
-		public boolean hasNext() {
-			return false;
+		public Node<E> traveller;
+		
+		Cursor() {
+			traveller = head;
 		}
 		
 		/**
-		 * goes to next value
+		 * Checks if there is a next value to go to
+		 * @return true if yes, false if no
+		 */
+		public boolean hasNext() {
+			return traveller != null;
+		}
+		
+		/**
+		 * Goes to next value and returns it
+		 * @return E next value in list
+		 * @throws NoSuchElementException if there is no next value
 		 */
 		public E next() {
-			return null;
+			if (hasNext()) {
+				traveller = traveller.next;
+				return traveller.value;
+			} else {
+				throw new NoSuchElementException();
+			}
 		}
 	}
 }

@@ -131,6 +131,8 @@ public class SortedLinkedListWithIteratorTest {
 		list.add("String1");
 		
 		assertEquals("String1", list.get(1));
+		
+		
 	}
 	
 	/**
@@ -151,7 +153,9 @@ public class SortedLinkedListWithIteratorTest {
 		assertEquals("String3", list.get(1));
 		
 		assertEquals("String", list.remove(0));
-		assertEquals("String3", list.get(0));
+		assertEquals("String3", list.get(0));		
+		
+		
 	}
 	
 	//TODO truncate

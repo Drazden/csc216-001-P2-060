@@ -224,7 +224,16 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	 */
 	@Override
 	public SortedList<E> truncate(int start) {
+		
+		Node<E> trav = head;
+		
+		for(int i = 0; i < start; i++) {
+			trav = trav.next;
+		}
+		
 		return this;
+		
+		
 	}
 
 	/**
@@ -268,14 +277,11 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	 * @return new cursor
 	 */
 	public SimpleListIterator<E> iterator() {		
-		try {
-			Cursor cursor = new Cursor();
-			return cursor;
-		} catch (NullPointerException e) {
-			e.getMessage();
+		if (head == null) {
+			head = new Node<E>(null, head);
 		}
-		return null;
-		
+		Cursor cursor = new Cursor();
+		return cursor;
 	}
 
 	/**

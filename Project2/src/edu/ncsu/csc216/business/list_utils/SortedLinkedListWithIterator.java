@@ -236,9 +236,12 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 		
 		Node<E> trav = head;
 		
-		for (int i = 0; i <= start; i++) {
+		int trim = size() - start;
+		
+		for (int i = 0; i < trim; i++) {
 			trav = trav.next;
 		}
+		
 		trav.next = null;
 		
 		return this;

@@ -116,9 +116,14 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	 * Gets element from list
 	 * @param index location of element to get
 	 * @return element found
+	 * @throws IndexOutOfBoundsException if index is less than 0 or above size
 	 */
 	@Override
 	public E get(int index) {
+		if (index < 0 || index >= size()) {
+			throw new IndexOutOfBoundsException();
+		}
+		
 		Node<E> trav = head;
 		
 		for (int i = 0; i < index; i++) {
@@ -133,9 +138,14 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	 * Removes element from list
 	 * @param index location of element to be removed
 	 * @return element removed
+	 * @throws IndexOutOfBoundsException if index is less than 0 or above size
 	 */
 	@Override
 	public E remove(int index) {
+		if (index < 0 || index >= size()) {
+			throw new IndexOutOfBoundsException();
+		}
+		
 		if (index == 0) {
 			Node<E> ret = head;
 			if(head.next != null) {

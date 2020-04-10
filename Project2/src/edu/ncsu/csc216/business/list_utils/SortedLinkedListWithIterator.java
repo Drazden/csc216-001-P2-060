@@ -239,7 +239,7 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 			return tail;
 		}
 		
-		if (start > size()) {
+		if (start >= size()) {
 			return tail;
 		}
 		

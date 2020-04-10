@@ -182,7 +182,17 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	 */
 	@Override
 	public int indexOf(E e) {
+		if (head == null) {
+			return -1;
+		}
+		
+		
 		Node<E> trav = head;
+		
+		if (trav.value == e) {
+			return 0;
+		}
+		
 		int counter = 0;
 		
 		while (trav.next != null) {
@@ -192,6 +202,10 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 				trav = trav.next;
 				counter++;
 			}
+		}
+		
+		if (trav.value == e) {
+			return counter;
 		}
 		
 		return -1;

@@ -86,6 +86,24 @@ public class SortedLinkedListWithIteratorTest {
 	}
 	
 	/**
+	 * Tests add method
+	 */
+	@Test
+	public void testAdd() {
+		SortedLinkedListWithIterator<String> list = new SortedLinkedListWithIterator<String>();
+		
+		list.add("String");
+		assertEquals("String", list.get(0));
+		
+		list.add("String1");
+		assertEquals("String1", list.get(1));
+		
+		list.remove(0);
+		list.add("String2");
+		assertEquals("String2", list.get(1));
+	}
+	
+	/**
 	 * Tests clear method
 	 */
 	@Test
@@ -135,5 +153,26 @@ public class SortedLinkedListWithIteratorTest {
 		assertEquals("String", list.remove(0));
 		assertEquals("String3", list.get(0));
 	}
+	
+	//TODO truncate
+	
+	/**
+	 * Tests indexOf method
+	 */
+	@Test
+	public void testIndexOf() {
+		SortedLinkedListWithIterator<String> list = new SortedLinkedListWithIterator<String>();
+
+		assertEquals(-1, list.indexOf("String"));
+		
+		list.add("String");
+		assertEquals(0, list.indexOf("String"));
+		
+		assertEquals(-1, list.indexOf("String1"));
+		
+		list.add("String1");
+		assertEquals(1, list.indexOf("String1"));
+	}
+	
 
 }

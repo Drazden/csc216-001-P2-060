@@ -31,7 +31,7 @@ public class Client {
 			throw new IllegalArgumentException();
 		}
 		this.name = name.trim();
-		this.id = id.replaceAll(" ", "");
+		this.id = id.replaceAll("\\s", "");
 		myLeases = new SimpleArrayList<Lease>();
 	}
 	
@@ -102,7 +102,9 @@ public class Client {
 			if (ocu.length() == 1) {
 				ocu = " " + ocu;
 			}
-			leases[i] = confNum + " | " + l.getStart() + " to " + l.getEnd() + " | " + ocu + " | ";
+			String propString = new String();
+			propString = l.getProperty().getClass().getName() + ":" + l.getProperty().getRoom() + l.getProperty().getFloor();
+			leases[i] = confNum + " | " + l.getStart() + " to " + l.getEnd() + " | " + ocu + " | " + propString;
 		}
 		return leases;
 	}

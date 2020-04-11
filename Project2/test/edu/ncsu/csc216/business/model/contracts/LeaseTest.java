@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import edu.ncsu.csc216.business.model.stakeholders.Client;
 /**
  * Tests Lease class
  * @author Jacob Robinson
@@ -17,9 +16,8 @@ public class LeaseTest {
 	 */
 	@Test
 	public void testConstruct() {
-		//Client client = new Client("Jacob", "Jac");
-		
-		//Lease lease = new Lease(0, client, )
+		int a = 1 + 1;
+		assertEquals(2, a);
 	}
 
 }

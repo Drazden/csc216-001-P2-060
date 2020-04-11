@@ -230,6 +230,8 @@ public class SortedLinkedListWithIterator<E extends Comparable<E>> implements So
 	 * Truncates the list
 	 * @param start where to truncate
 	 * @return truncated list
+	 * @throws IllegalArgumentException if above size
+	 * @throws IndexOutBoundsException if below 0
 	 */
 	@Override
 	public SortedList<E> truncate(int start) {

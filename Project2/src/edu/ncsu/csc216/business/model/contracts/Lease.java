@@ -16,7 +16,7 @@ public class Lease implements Comparable<Lease> {
 	private static int confirmationCounter = 0;
 	
 	/** Highest possible confirmation number **/
-	private static final int MAX_CONF_NUM = 0;
+	private static final int MAX_CONF_NUM = 999999;
 	
 	/** this leases confirmation number **/
 	private int confirmationNumber;
@@ -46,7 +46,13 @@ public class Lease implements Comparable<Lease> {
 	 * @param o occupants
 	 */
 	public Lease(int c, Client cl, RentalUnit r, LocalDate start, LocalDate end, int o) {
-		//not yet implemented
+		this.confirmationNumber = c;
+		resetConfirmationNumbering(c);
+		this.owner = cl;
+		this.property = r;
+		this.startDate = start;
+		this.endDate = end;
+		this.numOccupants = o;
 	}
 	
 	/**
@@ -58,7 +64,12 @@ public class Lease implements Comparable<Lease> {
 	 * @param o occupants
 	 */
 	public Lease(Client cl, RentalUnit r, LocalDate start, LocalDate end, int o) {
-		//not yet implented
+		this.confirmationNumber = confirmationCounter;
+		this.owner = cl;
+		this.property = r;
+		this.startDate = start;
+		this.endDate = end;
+		this.numOccupants = o;
 	}
 	
 	/**
@@ -110,11 +121,15 @@ public class Lease implements Comparable<Lease> {
 	}
 	
 	/**
-	 * setter for end date
+	 * used for setting end date to an earlier date if need
 	 * @param end end date to set
+	 * @throws IllegalArgumentException if end date would conflict with start
 	 */
 	public void setEndDateEarlier(LocalDate end) {
-		//not yet implemented
+		if (end.isBefore(this.startDate)) {
+			throw new IllegalArgumentException();
+		}
+		this.endDate = end;
 	}
 	
 	/**
@@ -122,15 +137,27 @@ public class Lease implements Comparable<Lease> {
 	 * @return formatted data as string array
 	 */
 	public String[] leaseData() {
-		return null;
+		String[] data = new String[5];
+		data[0] = "" + this.confirmationNumber;
+		data[1] = this.startDate.toString() + " to " + this.endDate.toString();
+		data[2] = "" + this.numOccupants;
+		data[3] = this.property.getClass().toString() + ":" + this.property.getFloor() + "-" + this.property.getRoom();
+		data[4] = this.owner.getName();
+		data[5] = this.owner.getId();
+		return data;
 	}
 	
 	/**
 	 * resets the counter
 	 * @param num number to reset counter to
+	 * @throws IllegalArgumentException if number is below 0 or above max
 	 */
 	public static void resetConfirmationNumbering(int num) {
-		//not yet implemented
+		if (num < 0 || num > MAX_CONF_NUM) {
+			throw new IllegalArgumentException();
+		}
+		
+		confirmationCounter = num;
 	}
 	
 	/**
@@ -139,7 +166,18 @@ public class Lease implements Comparable<Lease> {
 	 * @return int
 	 */
 	public int compareTo(Lease o) {
-		return 0;
+		if (this.startDate.compareTo(o.getStart()) < 0) {
+			return -1;
+		} else if (this.endDate.compareTo(o.getEnd()) < 0) {
+			return -1;
+		} else {
+			if (this.confirmationNumber < o.confirmationNumber) {
+				return -1;
+			} else {
+				return 1;
+			}
+		}
+		
 	}
 }
 

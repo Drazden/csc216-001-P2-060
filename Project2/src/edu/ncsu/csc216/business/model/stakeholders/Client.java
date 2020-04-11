@@ -27,7 +27,12 @@ public class Client {
 	 * @throws IllegalArgumentException if either parameter is invalid
 	 */
 	public Client(String name, String id) {
-		//not yet implemented
+		if (name == null || name.equals("") || id == null || id.equals("") || id.length() < 3) {
+			throw new IllegalArgumentException();
+		}
+		this.name = name;
+		this.id = id;
+		myLeases = new SimpleArrayList<Lease>();
 	}
 	
 	/**
@@ -47,11 +52,11 @@ public class Client {
 	}
 	
 	/**
-	 * Hashs clients data
+	 * Hashs clients data using id
 	 * @return hashed int
 	 */
 	public int hashCode() {
-		return 0;
+		return id.hashCode();
 	}
 	
 	/**
@@ -60,16 +65,19 @@ public class Client {
 	 * @return true if equal, false if not
 	 */
 	public boolean equals(Object o) {
-		return false;
+		return ((Client) o).getId().equals(this.id);
 	}
 	
 	/**
 	 * Adds a lease to this clients list of leases
-	 * @param l lease to be added
+	 * @param lease to be added
 	 * @throws IllegalArgumentException if lease is not this clients lease
 	 */
-	public void addNewLease(Lease l) {
-		//not yet implemented
+	public void addNewLease(Lease lease) {
+		if (lease.getClient() != this) {
+			throw new IllegalArgumentException();
+		}
+		myLeases.add(lease);
 	}
 	
 	/**
@@ -77,7 +85,11 @@ public class Client {
 	 * @return this clients leases list
 	 */
 	public String[] listLeases() {
-		return null;
+		String[] leases = new String[myLeases.size()];
+		for (int i = 0; i < myLeases.size(); i++) {
+			leases[i] = myLeases.get(i).toString();
+		}
+		return leases;
 	}
 	
 	/**
@@ -87,7 +99,12 @@ public class Client {
 	 * @throws IllegalArgumentException if index is invalid
 	 */
 	public Lease cancelLeaseAt(int idx) {
-		return null;
+		if (idx < 0 || idx >= myLeases.size()) {
+			throw new IllegalArgumentException();
+		}
+		Lease cancel = myLeases.get(idx);
+		myLeases.remove(idx);
+		return cancel;
 	}
 	
 	/**
@@ -97,6 +114,17 @@ public class Client {
 	 * @throws IllegalArgumentException if no lease with number found
 	 */
 	public Lease cancelLeaseWithNumber(int c) {
-		return null;
+		Lease cancel = null;
+		for (int i = 0; i < myLeases.size(); i++) {
+			if (myLeases.get(i).getConfirmationNumber() == c) {
+				cancel = myLeases.get(i);
+				myLeases.remove(i);
+			}
+		}
+		if (cancel == null) {
+			throw new IllegalArgumentException();
+		} else {
+			return cancel;
+		}
 	}
 }

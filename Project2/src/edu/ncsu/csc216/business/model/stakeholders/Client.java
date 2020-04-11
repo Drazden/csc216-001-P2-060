@@ -20,6 +20,7 @@ public class Client {
 	/** clients current leases as a lsit **/
 	private SimpleArrayList<Lease> myLeases;
 	
+
 	/**
 	 * Constructs a new client
 	 * @param name string of clients name 
@@ -31,7 +32,7 @@ public class Client {
 			throw new IllegalArgumentException();
 		}
 		this.name = name.trim();
-		this.id = id.trim();
+		this.id = id.trim().replaceAll("\\s", "");
 		myLeases = new SimpleArrayList<Lease>();
 	}
 	
@@ -102,8 +103,7 @@ public class Client {
 			if (ocu.length() == 1) {
 				ocu = " " + ocu;
 			}
-			String propString = new String();
-			propString = l.getProperty().getClass().getSimpleName() + ":" + l.getProperty().getFloor() + "-" + l.getProperty().getRoom();
+			String propString = l.getProperty().getClass().getSimpleName() + l.getProperty().getFloor() + "-" + l.getProperty().getRoom();
 			leases[i] = confNum + " | " + l.getStart() + " to " + l.getEnd() + " | " + ocu + " | " + propString;
 		}
 		return leases;

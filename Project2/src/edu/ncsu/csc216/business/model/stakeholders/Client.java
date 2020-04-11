@@ -27,11 +27,11 @@ public class Client {
 	 * @throws IllegalArgumentException if either parameter is invalid
 	 */
 	public Client(String name, String id) {
-		if (name == null || name.isBlank() || id == null || id.equals("") || id.length() < 3) {
+		if (name == null || name.isBlank() || id == null || id.equals("") || id.length() < 3 || id.contains(" ")) {
 			throw new IllegalArgumentException();
 		}
 		this.name = name.trim();
-		this.id = id.replaceAll("\\s", "");
+		this.id = id.trim();
 		myLeases = new SimpleArrayList<Lease>();
 	}
 	

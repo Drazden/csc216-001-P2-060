@@ -27,11 +27,11 @@ public class Client {
 	 * @throws IllegalArgumentException if either parameter is invalid
 	 */
 	public Client(String name, String id) {
-		if (name == null || name.equals("") || id == null || id.equals("") || id.length() < 3) {
+		if (name == null || name.isBlank() || id == null || id.equals("") || id.length() < 3) {
 			throw new IllegalArgumentException();
 		}
-		this.name = name;
-		this.id = id;
+		this.name = name.trim();
+		this.id = id.trim();
 		myLeases = new SimpleArrayList<Lease>();
 	}
 	
@@ -87,7 +87,14 @@ public class Client {
 	public String[] listLeases() {
 		String[] leases = new String[myLeases.size()];
 		for (int i = 0; i < myLeases.size(); i++) {
-			leases[i] = myLeases.get(i).toString();
+			Lease l = myLeases.get(i);
+			String confNum = "" + l.getConfirmationNumber();
+			confNum = ("000000" + confNum).substring(confNum.length());
+			String ocu = "" + l.getNumOccupants();
+			if (ocu.length() == 1) {
+				ocu = " " + ocu;
+			}
+			leases[i] = confNum + " | " + l.getStart() + " to " + l.getEnd() + " | " + ocu + " | ";
 		}
 		return leases;
 	}

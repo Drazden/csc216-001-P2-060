@@ -95,7 +95,7 @@ public class ClientTest {
 		
 		//Adds clients lease to client
 		client.addNewLease(lease);
-		assertEquals(lease.toString(), client.listLeases()[0]);
+		assertEquals(1, client.listLeases().length);
 		
 		//Trys to add someone elses lease to client
 		Lease lease2 = new Lease(0, client2, room, start, end, 1);

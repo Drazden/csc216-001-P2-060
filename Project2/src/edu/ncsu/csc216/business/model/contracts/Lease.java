@@ -48,6 +48,7 @@ public class Lease implements Comparable<Lease> {
 	public Lease(int c, Client cl, RentalUnit r, LocalDate start, LocalDate end, int o) {
 		this.confirmationNumber = c;
 		resetConfirmationNumbering(c);
+		confirmationCounter++;
 		this.owner = cl;
 		this.property = r;
 		this.startDate = start;
@@ -65,6 +66,7 @@ public class Lease implements Comparable<Lease> {
 	 */
 	public Lease(Client cl, RentalUnit r, LocalDate start, LocalDate end, int o) {
 		this.confirmationNumber = confirmationCounter;
+		confirmationCounter++;
 		this.owner = cl;
 		this.property = r;
 		this.startDate = start;
@@ -137,7 +139,7 @@ public class Lease implements Comparable<Lease> {
 	 * @return formatted data as string array
 	 */
 	public String[] leaseData() {
-		String[] data = new String[5];
+		String[] data = new String[6];
 		data[0] = "" + this.confirmationNumber;
 		data[1] = this.startDate.toString() + " to " + this.endDate.toString();
 		data[2] = "" + this.numOccupants;

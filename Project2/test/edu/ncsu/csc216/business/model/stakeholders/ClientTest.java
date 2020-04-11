@@ -88,9 +88,9 @@ public class ClientTest {
 	public void testAddNewLease() {
 		Client client = new Client("Jacob", "Jac");
 		Client client2 = new Client("Jack", "Jack");
-		ConferenceRoom room = new ConferenceRoom("01-01", 10);
+		ConferenceRoom room = new ConferenceRoom("10-10", 10);
 		LocalDate start = LocalDate.of(2020, 4, 10);
-		LocalDate end = LocalDate.of(2020, 5, 10);
+		LocalDate end = LocalDate.of(2020, 4, 17);
 		Lease lease = new Lease(0, client, room, start, end, 1);
 		
 		//Adds clients lease to client
@@ -112,9 +112,9 @@ public class ClientTest {
 	@Test
 	public void testCancelLeaseAt() {
 		Client client = new Client("Jacob", "Jac");
-		ConferenceRoom room = new ConferenceRoom("01-01", 10);
+		ConferenceRoom room = new ConferenceRoom("10-10", 10);
 		LocalDate start = LocalDate.of(2020, 4, 10);
-		LocalDate end = LocalDate.of(2020, 5, 10);
+		LocalDate end = LocalDate.of(2020, 4, 17);
 		Lease lease = new Lease(0, client, room, start, end, 1);
 		client.addNewLease(lease);
 		
@@ -141,9 +141,9 @@ public class ClientTest {
 	@Test
 	public void testCancelLeaseWithNumber() {
 		Client client = new Client("Jacob", "Jac");
-		ConferenceRoom room = new ConferenceRoom("01-01", 10);
+		ConferenceRoom room = new ConferenceRoom("10-10", 10);
 		LocalDate start = LocalDate.of(2020, 4, 10);
-		LocalDate end = LocalDate.of(2020, 5, 10);
+		LocalDate end = LocalDate.of(2020, 4, 17);
 		Lease lease = new Lease(0, client, room, start, end, 1);
 		client.addNewLease(lease);
 		

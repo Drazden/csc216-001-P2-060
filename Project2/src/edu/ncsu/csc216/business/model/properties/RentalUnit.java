@@ -1,6 +1,7 @@
 package edu.ncsu.csc216.business.model.properties;
 
 import java.time.LocalDate;
+import java.util.Scanner;
 
 import edu.ncsu.csc216.business.list_utils.SortedLinkedListWithIterator;
 import edu.ncsu.csc216.business.list_utils.SortedList;
@@ -16,16 +17,16 @@ import edu.ncsu.csc216.business.model.stakeholders.Client;
 public abstract class RentalUnit implements Comparable<RentalUnit> {
 
 	/** Highest floor number for the rental unit **/
-	private static final int MAX_FLOOR = 0;
+	private static final int MAX_FLOOR = 45;
 	
 	/** Lowest floor number for the rental unit **/
-	private static final int MIN_FLOOR = 0;
+	private static final int MIN_FLOOR = 1;
 	
 	/** Highest room number for the rental unit **/
-	private static final int MAX_ROOM = 0;
+	private static final int MAX_ROOM = 99;
 	
 	/** Lowest room number for the rental unit **/
-	private static final int MIN_ROOM = 0;
+	private static final int MIN_ROOM = 10;
 	
 	/** Represents if room is in service, true if it is, otherwise false **/
 	private boolean inService;
@@ -49,7 +50,21 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 	 * @throws IllegalArgumentException for invalid location or capacity is less than 1
 	 */
 	public RentalUnit(String loc, int cap) {
-		//not yet implemented
+		if (cap < 0 || loc.length() != 5) {
+			throw new IllegalArgumentException();
+		}
+		
+		Scanner scanner = new Scanner(loc);
+		scanner.useDelimiter("-");
+		floor = scanner.nextInt();
+		room = scanner.nextInt();
+		scanner.close();
+		
+		if (floor < MIN_FLOOR || floor > MAX_FLOOR || room < MIN_ROOM || room > MAX_ROOM) {
+			throw new IllegalArgumentException();
+		}
+		
+		inService = true;
 	}
 	
 	/**
@@ -82,14 +97,22 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 	 * @return int
 	 */
 	public int compareTo(RentalUnit o) {
-		return 0;
+		if (this.floor < o.getFloor()) {
+			return -1;
+		} else {
+			if (this.room < o.getRoom()) {
+				return -1;
+			} else {
+				return 1;
+			}
+		}
 	}
 	
 	/**
 	 * Return this unit to service
 	 */
 	public void returnToService() {
-		//not yet implemented
+		inService = true;
 	}
 	
 	/**
@@ -97,14 +120,14 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 	 * @return boolean for is in service
 	 */
 	public boolean isInService() {
-		return false;
+		return inService;
 	}
 	
 	/**
 	 * Take this unit out of service
 	 */
 	public void takeOutOfService() {
-		//not yet implemented
+		inService = false;
 	}
 	
 	/**
@@ -141,7 +164,11 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 	 * @throws RentalDateException if the dates are invalid
 	 */
 	public void checkDates(LocalDate start, LocalDate end) throws RentalDateException {
-		//not yet implemented
+		LocalDate min = LocalDate.of(2020, 1, 1);
+		LocalDate max = LocalDate.of(2029, 12, 31);
+		if (start.isBefore(min) || start.isAfter(max) || end.isBefore(min) || end.isAfter(max) || end.isBefore(end)) {
+			throw new RentalDateException();
+		}
 	}
 	
 	/**
@@ -153,8 +180,14 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 	 * @throws IllegalArgumentException if parameters are null, ocu/dur < 1
 	 * @throws RentalOutOfServiceException if unit is not in service
 	 */
-	protected void checkLeaseConditions(Client cli, LocalDate start, int dur, int ocu) {
-		//Not yet implemented
+	protected void checkLeaseConditions(Client cli, LocalDate start, int dur, int ocu) throws RentalOutOfServiceException {
+		if (cli == null || start == null || dur < 1 || ocu < 1) {
+			throw new IllegalArgumentException();
+		}
+		if (!isInService()) {
+			throw new RentalOutOfServiceException();
+		}
+		
 	}
 	
 	/**
@@ -164,7 +197,16 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 	 * @return list of cancelled leases
 	 */
 	public SortedList<Lease> removeFromServiceStarting(LocalDate start) {
-		return null;
+		SortedLinkedListWithIterator<Lease> cancel = new SortedLinkedListWithIterator<Lease>();
+		for (int i = 0; i < myLeases.size(); i++) {
+			if (myLeases.get(i).getStart().isEqual(start) || myLeases.get(i).getStart().isAfter(start)) {
+				cancel.add(myLeases.get(i));
+				myLeases.remove(i);
+			} else if (myLeases.get(i).getEnd().isAfter(start)) {
+				myLeases.get(i).setEndDateEarlier(start);
+			}
+		}
+		return cancel;
 	}
 	
 	/**
@@ -173,7 +215,12 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 	 * @return index of found lease
 	 */
 	protected int cutoffIndex(LocalDate start) {
-		return 0;
+		for (int i = 0; i < myLeases.size(); i++) {
+			if (start.isBefore(myLeases.get(i).getStart())) {
+				return i;
+			}
+		}
+		return -1;
 	}
 	
 	/**
@@ -183,7 +230,18 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 	 * @throws IllegalArgumentException if no such lease exists
 	 */
 	public Lease cancelLeaseByNumber(int con) {
-		return null;
+		Lease cancel = null;
+		for (int i = 0; i < myLeases.size(); i++) {
+			if (myLeases.get(i).getConfirmationNumber() == con) {
+				cancel = myLeases.get(i);
+				myLeases.remove(i);
+			}
+		}
+		if (cancel != null) {
+			return cancel;
+		} else {
+			throw new IllegalArgumentException();
+		}
 	}
 	
 	/**
@@ -192,7 +250,9 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 	 * @throws IllegalArgumentException if lease is not for this unit
 	 */
 	public void addLease(Lease lease) {
-		//not yet implemented
+		if (isInService()) {
+			myLeases.add(lease);
+		}
 	}
 	
 	/**
@@ -208,7 +268,12 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 	 * @return floor, room, capacity, availability
 	 */
 	public String getDescription() {
-		return null;
+		String string = new String();
+		string += "" + getFloor() + ", " + getRoom() + ", " + getCapacity();
+		if (!isInService()) {
+			string += ", Unavailable";
+		}
+		return string;
 	}
 	
 	/**
@@ -225,6 +290,6 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 	 * @return true if equals
 	 */
 	public boolean equals(Object o) {
-		return false;
+		return this.floor == ((RentalUnit) o).getFloor() && this.room == ((RentalUnit) o).getRoom();
 	}
 }

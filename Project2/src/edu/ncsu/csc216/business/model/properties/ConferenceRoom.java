@@ -2,6 +2,7 @@ package edu.ncsu.csc216.business.model.properties;
 
 import java.time.LocalDate;
 
+import edu.ncsu.csc216.business.list_utils.SortedLinkedListWithIterator;
 import edu.ncsu.csc216.business.list_utils.SortedList;
 import edu.ncsu.csc216.business.model.contracts.Lease;
 import edu.ncsu.csc216.business.model.stakeholders.Client;
@@ -14,10 +15,10 @@ import edu.ncsu.csc216.business.model.stakeholders.Client;
 public class ConferenceRoom extends RentalUnit {
 
 	/** max capacity of people for this kind **/
-	public static final int MAX_CAPACITY = 0;
+	public static final int MAX_CAPACITY = 25;
 	
 	/** max lease duration for this kind **/
-	public static final int MAX_DURATION = 0;
+	public static final int MAX_DURATION = 7;
 	
 	/**
 	 * Creates a new conference room
@@ -27,6 +28,9 @@ public class ConferenceRoom extends RentalUnit {
 	 */
 	public ConferenceRoom(String loc, int cap) {
 		super(loc, cap);
+		if (cap > 25) {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	/**
@@ -41,7 +45,16 @@ public class ConferenceRoom extends RentalUnit {
 	 */
 	@Override
 	public Lease reserve(Client cli, LocalDate start, int dur, int ocu) throws RentalCapacityException, RentalDateException{
-		return null;
+		if (ocu > MAX_CAPACITY) {
+			throw new RentalCapacityException();
+		}
+		if (dur > MAX_DURATION) {
+			throw new RentalDateException();
+		}
+		RentalUnit me = this;
+		LocalDate end = start.plusDays(dur);
+		Lease lease = new Lease(cli, me, start, end, ocu);
+		return lease;
 	}
 
 	/**
@@ -64,7 +77,16 @@ public class ConferenceRoom extends RentalUnit {
 	 * @return list of cancelled leases
 	 */
 	public SortedList<Lease> removeFromServiceStarting(LocalDate start) {
-		return null;
+		SortedLinkedListWithIterator<Lease> cancel = new SortedLinkedListWithIterator<Lease>();
+		for (int i = 0; i < myLeases.size(); i++) {
+			if (myLeases.get(i).getStart().isEqual(start) || myLeases.get(i).getStart().isAfter(start)) {
+				cancel.add(myLeases.get(i));
+				myLeases.remove(i);
+			} else if (myLeases.get(i).getEnd().isAfter(start)) {
+				myLeases.get(i).setEndDateEarlier(start);
+			}
+		}
+		return cancel;
 	}
 	
 	/**

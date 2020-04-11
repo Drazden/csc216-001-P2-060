@@ -103,7 +103,7 @@ public class Client {
 				ocu = " " + ocu;
 			}
 			String propString = new String();
-			propString = l.getProperty().getClass().getSimpleName() + ":" + l.getProperty().getRoom() + l.getProperty().getFloor();
+			propString = l.getProperty().getClass().getSimpleName() + ":" + l.getProperty().getFloor() + "-" + l.getProperty().getRoom();
 			leases[i] = confNum + " | " + l.getStart() + " to " + l.getEnd() + " | " + ocu + " | " + propString;
 		}
 		return leases;

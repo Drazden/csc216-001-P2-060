@@ -148,7 +148,15 @@ public class Lease implements Comparable<Lease> {
 		data[0] = confNum;
 		data[1] = this.startDate.toString() + " to " + this.endDate.toString();
 		data[2] = "" + this.numOccupants;
-		data[3] = this.property.getClass().toString() + ":" + this.property.getFloor() + "-" + this.property.getRoom();
+		String kind;
+		if (this.property.getClass().getSimpleName().equals("ConferenceRoom")) {
+			kind = "Conference Room";
+		} else if (this.property.getClass().getSimpleName().equals("HotelSuite")) {
+			kind = "Hotel Suite";
+		} else {
+			kind = "Office";
+		}
+		data[3] = kind + ":" + this.property.getFloor() + "-" + this.property.getRoom();
 		data[4] = this.owner.getName();
 		data[5] = this.owner.getId();
 		return data;
@@ -163,8 +171,12 @@ public class Lease implements Comparable<Lease> {
 		if (num < 0 || num > MAX_CONF_NUM) {
 			throw new IllegalArgumentException();
 		}
+		if (num == MAX_CONF_NUM) {
+			confirmationCounter = 0;
+		} else {
+			confirmationCounter = num;
+		}
 		
-		confirmationCounter = num;
 	}
 	
 	/**

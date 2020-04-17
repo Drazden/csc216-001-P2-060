@@ -47,8 +47,11 @@ public class Lease implements Comparable<Lease> {
 	 */
 	public Lease(int c, Client cl, RentalUnit r, LocalDate start, LocalDate end, int o) {
 		this.confirmationNumber = c;
-		resetConfirmationNumbering(c);
-		confirmationCounter++;
+		if (c == MAX_CONF_NUM) {
+			resetConfirmationNumbering(c);
+		} else {
+			confirmationCounter++;
+		}
 		this.owner = cl;
 		this.property = r;
 		this.startDate = start;

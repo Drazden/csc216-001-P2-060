@@ -28,15 +28,15 @@ public class LeaseTest {
 		LocalDate start = LocalDate.of(2020, 4, 10);
 		LocalDate end = LocalDate.of(2020, 4, 17);
 		
-		Lease lease = new Lease(0, client, unit, start, end, 1);
+		Lease lease = new Lease(999999, client, unit, start, end, 1);
 		
 		HotelSuite suite = new HotelSuite("10-10", 1);
 		
-		Lease leaseS = new Lease(1, client, suite, start, end, 1);
+		Lease leaseS = new Lease(client, suite, start, end, 1);
 		String[] suiteData = leaseS.leaseData();
 		assertEquals("Hotel Suite:10-10", suiteData[3]);
 		
-		assertEquals(0, lease.getConfirmationNumber());
+		assertEquals(999999, lease.getConfirmationNumber());
 		assertEquals(client, lease.getClient());
 		assertEquals(unit, lease.getProperty());
 		assertEquals(start, lease.getStart());
@@ -44,10 +44,10 @@ public class LeaseTest {
 		assertEquals(1, lease.getNumOccupants());
 		
 		String[] data = lease.leaseData();
-		assertEquals("000000", data[0]);
+		assertEquals("999999", data[0]);
 		
 		Lease lease2 = new Lease(client, unit, start, end, 1);
-		assertEquals(2, lease2.getConfirmationNumber());
+		assertEquals(1, lease2.getConfirmationNumber());
 		
 		LocalDate endNew = LocalDate.of(2020, 4, 16);
 		lease.setEndDateEarlier(endNew);

@@ -59,7 +59,7 @@ public class Client {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -76,7 +76,7 @@ public class Client {
 			return false;
 		return true;
 	}
-	
+
 	/**
 	 * Adds a lease to this clients list of leases
 	 * @param lease to be added

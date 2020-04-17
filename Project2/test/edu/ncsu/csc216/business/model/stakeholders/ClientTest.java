@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import edu.ncsu.csc216.business.model.contracts.Lease;
 import edu.ncsu.csc216.business.model.properties.ConferenceRoom;
+import edu.ncsu.csc216.business.model.properties.HotelSuite;
 /**
  * Tests Client class
  * @author Jacob Robinson
@@ -93,9 +94,14 @@ public class ClientTest {
 		LocalDate end = LocalDate.of(2020, 4, 17);
 		Lease lease = new Lease(0, client, room, start, end, 1);
 		
+		HotelSuite suite = new HotelSuite("10-10", 1);
+		Lease leaseS = new Lease(1, client, suite, start, end, 1);
+		
 		//Adds clients lease to client
 		client.addNewLease(lease);
 		assertEquals(1, client.listLeases().length);
+		
+		client.addNewLease(leaseS);
 		
 		//Trys to add someone elses lease to client
 		Lease lease2 = new Lease(0, client2, room, start, end, 1);
@@ -104,6 +110,7 @@ public class ClientTest {
 		} catch (IllegalArgumentException e) {
 			e.getMessage();
 		}
+
 	}
 	
 	/**

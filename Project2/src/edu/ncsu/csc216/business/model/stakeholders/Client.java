@@ -108,8 +108,17 @@ public class Client {
 			if (ocu.length() == 1) {
 				ocu = " " + ocu;
 			}
-			String propString = l.getProperty().getClass().getSimpleName() + l.getProperty().getFloor() + "-" + l.getProperty().getRoom();
-			leases[i] = confNum + " | " + l.getStart() + " to " + l.getEnd() + " | " + ocu + " | " + propString;
+			String kind;
+			if (l.getProperty().getClass().getSimpleName().equals("ConferenceRoom")) {
+				kind = "Conference Room";
+			} else if (l.getProperty().getClass().getSimpleName().equals("HotelSuite")) {
+				kind = "Hotel Suite";
+			} else {
+				kind = "Office";
+			}
+			leases[i] = confNum + " | " + l.getStart() + " to " + l.getEnd() + 
+					" | " + ocu + " | " +
+					String.format("%0$-17s", kind + ":") + String.format("%0$7s", l.getProperty().getFloor() + "-" + l.getProperty().getRoom());
 		}
 		return leases;
 	}

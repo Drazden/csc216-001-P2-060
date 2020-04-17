@@ -67,6 +67,9 @@ public class Lease implements Comparable<Lease> {
 	public Lease(Client cl, RentalUnit r, LocalDate start, LocalDate end, int o) {
 		this.confirmationNumber = confirmationCounter;
 		confirmationCounter++;
+		if (confirmationCounter == MAX_CONF_NUM) {
+			confirmationCounter = 0;
+		}
 		this.owner = cl;
 		this.property = r;
 		this.startDate = start;
@@ -140,7 +143,9 @@ public class Lease implements Comparable<Lease> {
 	 */
 	public String[] leaseData() {
 		String[] data = new String[6];
-		data[0] = "" + this.confirmationNumber;
+		String confNum = "" + this.getConfirmationNumber();
+		confNum = ("000000" + confNum).substring(confNum.length());
+		data[0] = confNum;
 		data[1] = this.startDate.toString() + " to " + this.endDate.toString();
 		data[2] = "" + this.numOccupants;
 		data[3] = this.property.getClass().toString() + ":" + this.property.getFloor() + "-" + this.property.getRoom();
@@ -168,15 +173,19 @@ public class Lease implements Comparable<Lease> {
 	 * @return int
 	 */
 	public int compareTo(Lease o) {
-		if (this.startDate.compareTo(o.getStart()) < 0) {
+		if (this.startDate.isBefore(o.startDate)) {
 			return -1;
-		} else if (this.endDate.compareTo(o.getEnd()) < 0) {
+		} else if (o.startDate.isBefore(this.startDate)){
+			return 1;
+		} else if (this.endDate.isBefore(o.endDate)) {
 			return -1;
 		} else {
 			if (this.confirmationNumber < o.confirmationNumber) {
 				return -1;
-			} else {
+			} else if (o.confirmationNumber < this.confirmationNumber) {
 				return 1;
+			} else {
+				return 0;
 			}
 		}
 		

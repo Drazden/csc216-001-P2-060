@@ -37,7 +37,7 @@ public class LeaseTest {
 		assertEquals(1, lease.getNumOccupants());
 		
 		String[] data = lease.leaseData();
-		assertEquals("0", data[0]);
+		assertEquals("000000", data[0]);
 		
 		Lease lease2 = new Lease(client, unit, start, end, 1);
 		assertEquals(1, lease2.getConfirmationNumber());

@@ -64,7 +64,9 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 			throw new IllegalArgumentException();
 		}
 		
+		this.capacity = cap;
 		inService = true;
+		myLeases = new SortedLinkedListWithIterator<Lease>();
 	}
 	
 	/**
@@ -99,11 +101,15 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 	public int compareTo(RentalUnit o) {
 		if (this.floor < o.getFloor()) {
 			return -1;
+		} else if (this.floor > o.getFloor()) {
+			return 1;
 		} else {
 			if (this.room < o.getRoom()) {
 				return -1;
-			} else {
+			} else if (this.room > o.getRoom()) {
 				return 1;
+			} else {
+				return 0;
 			}
 		}
 	}
@@ -250,9 +256,19 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 	 * @throws IllegalArgumentException if lease is not for this unit
 	 */
 	public void addLease(Lease lease) {
-		if (isInService()) {
-			myLeases.add(lease);
+		try {
+			this.checkDates(lease.getStart(), lease.getEnd());
+		} catch (RentalDateException e) {
+			throw new IllegalArgumentException();
 		}
+		
+		try {
+			this.checkLeaseConditions(lease.getClient(), lease.getStart(), 1, lease.getNumOccupants());
+		} catch (RentalOutOfServiceException e) {
+			throw new IllegalArgumentException();
+		}
+	
+		myLeases.add(lease);
 	}
 	
 	/**
@@ -260,7 +276,19 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 	 * @return string array with each string as a lease
 	 */
 	public String[] listLeases() {
-		return null;
+		String[] leases = new String[myLeases.size()];
+		for (int i = 0; i < myLeases.size(); i++) {
+			Lease l = myLeases.get(i);
+			String confNum = "" + l.getConfirmationNumber();
+			confNum = ("000000" + confNum).substring(confNum.length());
+			String ocu = "" + l.getNumOccupants();
+			if (ocu.length() == 1) {
+				ocu = " " + ocu;
+			}
+			leases[i] = confNum + " | " + l.getStart() + " to " + l.getEnd() + 
+					" | " + ocu + " | " + l.getClient().getName() + " (" + l.getClient().getId() + ")";
+		}
+		return leases;
 	}
 	
 	/**
@@ -275,21 +303,40 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 		}
 		return string;
 	}
-	
+
 	/**
-	 * Hashsed int
-	 * @return hashed code
+	 * Hashses based on floor and room
+	 * @return hased int
 	 */
+	@Override
 	public int hashCode() {
-		return 0;
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + floor;
+		result = prime * result + room;
+		return result;
+	}
+
+	/**
+	 * Checks if this rental unit equals another based on floor and room
+	 * @param obj object to compare against
+	 * @return true if equal, false if not
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RentalUnit other = (RentalUnit) obj;
+		if (floor != other.floor)
+			return false;
+		if (room != other.room)
+			return false;
+		return true;
 	}
 	
-	/**
-	 * Checks if this unit equals another
-	 * @param o unit to check against
-	 * @return true if equals
-	 */
-	public boolean equals(Object o) {
-		return this.floor == ((RentalUnit) o).getFloor() && this.room == ((RentalUnit) o).getRoom();
-	}
+	
 }

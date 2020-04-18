@@ -11,11 +11,11 @@ import org.junit.Test;
 public class ConferenceRoomTest {
 
 	/**
-	 * Default test
+	 * Tests creating new ConferenceRoom
 	 */
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testConstruct() {
+		ConferenceRoom room = new ConferenceRoom(null, 0);
 	}
 
 }

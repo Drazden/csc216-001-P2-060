@@ -55,8 +55,10 @@ public class ConferenceRoom extends RentalUnit {
 		
 		super.checkLeaseConditions(cli, start, dur, ocu);
 		
+		
 		RentalUnit me = this;
 		LocalDate end = start.plusDays(dur - 1);
+		super.checkDates(start, end);
 		Lease lease = new Lease(cli, me, start, end, ocu);
 		myLeases.add(lease);
 		return lease;

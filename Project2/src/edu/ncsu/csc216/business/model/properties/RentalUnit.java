@@ -214,7 +214,7 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 				cancel.add(myLeases.get(i));
 				myLeases.remove(i);
 			} else if (myLeases.get(i).getEnd().isAfter(start)) {
-				myLeases.get(i).setEndDateEarlier(start);
+				myLeases.get(i).setEndDateEarlier(start.minusDays(1));
 			}
 		}
 		this.inService = false;

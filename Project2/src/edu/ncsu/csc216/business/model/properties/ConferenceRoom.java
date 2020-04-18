@@ -54,6 +54,7 @@ public class ConferenceRoom extends RentalUnit {
 		RentalUnit me = this;
 		LocalDate end = start.plusDays(dur);
 		Lease lease = new Lease(cli, me, start, end, ocu);
+		myLeases.add(lease);
 		return lease;
 	}
 
@@ -67,7 +68,9 @@ public class ConferenceRoom extends RentalUnit {
 	 */
 	@Override
 	public Lease recordExistingLease(int con, Client cli, LocalDate start, LocalDate end, int ocu) {
-		return null;
+		Lease lease = new Lease(con, cli, this, start, end, ocu);
+		myLeases.add(lease);
+		return lease;
 	}
 
 	/**
@@ -94,6 +97,7 @@ public class ConferenceRoom extends RentalUnit {
 	 * @return floor, room, capacity, availability
 	 */
 	public String getDescription() {
-		return null;
+		String ret = "Conference Room: " + super.getDescription();
+		return ret;
 	}
 }

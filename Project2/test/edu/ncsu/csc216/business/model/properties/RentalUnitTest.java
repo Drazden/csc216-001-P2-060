@@ -109,6 +109,7 @@ public class RentalUnitTest {
 		LocalDate newEnd = LocalDate.of(2020, 4, 16);
 		
 		unit.returnToService();
+		
 		unit.addLease(lease);
 		unit.removeFromServiceStarting(newEnd);
 		assertEquals(newEnd.minusDays(1), lease.getEnd());

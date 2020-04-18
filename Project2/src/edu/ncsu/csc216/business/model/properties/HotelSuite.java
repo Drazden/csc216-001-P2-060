@@ -71,6 +71,7 @@ public class HotelSuite extends RentalUnit {
 	 * @return list of cancelled leases
 	 */
 	public SortedList<Lease> removeFromServiceStarting(LocalDate start) {
+		super.removeFromServiceStarting(start);
 		return null;
 	}
 	

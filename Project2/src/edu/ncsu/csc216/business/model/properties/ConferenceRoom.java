@@ -41,15 +41,19 @@ public class ConferenceRoom extends RentalUnit {
 	 * @return new Lease
 	 * @throws RentalCapacityException for invalid capacity
 	 * @throws RentalDateException for invalid date
+	 * @throws RentalOutOfServiceException if unit not in service
 	 */
 	@Override
-	public Lease reserve(Client cli, LocalDate start, int dur, int ocu) throws RentalCapacityException, RentalDateException{
+	public Lease reserve(Client cli, LocalDate start, int dur, int ocu) throws RentalCapacityException, RentalDateException, RentalOutOfServiceException{
 		if (ocu > super.getCapacity()) {
 			throw new RentalCapacityException();
 		}
 		if (dur > MAX_DURATION) {
 			throw new RentalDateException();
 		}
+		
+		super.checkLeaseConditions(cli, start, dur, ocu);
+		
 		RentalUnit me = this;
 		LocalDate end = start.plusDays(dur - 1);
 		Lease lease = new Lease(cli, me, start, end, ocu);
@@ -65,9 +69,11 @@ public class ConferenceRoom extends RentalUnit {
 	 * @param ocu occupants
 	 * @return new lease
 	 * @throws RentalDateException if duration over 7 days
+	 * @throws RentalOutOfServiceException if unit not in service
 	 */
 	@Override
-	public Lease recordExistingLease(int con, Client cli, LocalDate start, LocalDate end, int ocu) throws RentalDateException {
+	public Lease recordExistingLease(int con, Client cli, LocalDate start, LocalDate end, int ocu) throws RentalDateException, RentalOutOfServiceException {
+		super.checkLeaseConditions(cli, start, 1, ocu);
 		Lease lease = new Lease(con, cli, this, start, end, ocu);
 		if ((lease.getEnd().getDayOfMonth() - lease.getStart().getDayOfMonth() - 1) > MAX_DURATION) {
 			throw new RentalDateException();

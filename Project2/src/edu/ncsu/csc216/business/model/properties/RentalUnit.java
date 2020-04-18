@@ -164,8 +164,9 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 	 * @return new lease
 	 * @throws RentalDateException if dates are invalid (conflicting, improper for kind, out of range)
 	 * @throws RentalCapacityException if occupants exceed capacity
+	 * @throws RentalOutOfServiceException if not in service
 	 */
-	public abstract Lease recordExistingLease(int con, Client cli, LocalDate start, LocalDate end, int ocu) throws RentalDateException, RentalCapacityException;
+	public abstract Lease recordExistingLease(int con, Client cli, LocalDate start, LocalDate end, int ocu) throws RentalDateException, RentalCapacityException, RentalOutOfServiceException;
 	
 	/**
 	 * Checks if dates are correct. must be between 1/1/20 and 12/31/29, start before end
@@ -302,9 +303,9 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 	 */
 	public String getDescription() {
 		String string = new String();
-		string = "" + getFloor() + ", " + getRoom() + " | " + getCapacity();
+		string = "" + getFloor() + "-" + getRoom() + " | " + getCapacity();
 		if (!isInService()) {
-			string += ", Unavailable";
+			string += " | Unavailable";
 		}
 		return string;
 	}

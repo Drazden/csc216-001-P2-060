@@ -27,7 +27,7 @@ public class ConferenceRoomTest {
 		assertEquals(10, room.getFloor());
 		assertEquals(10, room.getRoom());
 		assertEquals(true, room.isInService());
-		assertEquals("Conference Room: 10, 10 | 10", room.getDescription());
+		assertEquals("Conference Room: 10-10 | 10", room.getDescription());
 		assertTrue(room.equals(room));
 		assertEquals(0, room.compareTo(room));
 		
@@ -79,11 +79,15 @@ public class ConferenceRoomTest {
 		
 		assertEquals(cancel.get(0), unit.removeFromServiceStarting(start).get(0));
 		
+		unit.returnToService();
+		
 		try {
-			unit.recordExistingLease(0, client, start, end, 10);
+			unit.recordExistingLease(0, client, start, end, 10); 
 		} catch (RentalDateException e) {
 			fail();
 		} catch (RentalCapacityException e) {
+			fail();
+		} catch (RentalOutOfServiceException e) {
 			fail();
 		}
 	}

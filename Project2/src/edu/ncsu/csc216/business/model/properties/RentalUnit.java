@@ -216,6 +216,7 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 				myLeases.get(i).setEndDateEarlier(start);
 			}
 		}
+		this.inService = false;
 		return cancel;
 	}
 	
@@ -301,7 +302,7 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 	 */
 	public String getDescription() {
 		String string = new String();
-		string += "" + getFloor() + ", " + getRoom() + ", " + getCapacity();
+		string = "" + getFloor() + ", " + getRoom() + " | " + getCapacity();
 		if (!isInService()) {
 			string += ", Unavailable";
 		}

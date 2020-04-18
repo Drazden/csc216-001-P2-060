@@ -2,7 +2,6 @@ package edu.ncsu.csc216.business.model.properties;
 
 import java.time.LocalDate;
 
-import edu.ncsu.csc216.business.list_utils.SortedLinkedListWithIterator;
 import edu.ncsu.csc216.business.list_utils.SortedList;
 import edu.ncsu.csc216.business.model.contracts.Lease;
 import edu.ncsu.csc216.business.model.stakeholders.Client;
@@ -28,7 +27,7 @@ public class ConferenceRoom extends RentalUnit {
 	 */
 	public ConferenceRoom(String loc, int cap) {
 		super(loc, cap);
-		if (cap > 25) {
+		if (cap > MAX_CAPACITY) {
 			throw new IllegalArgumentException();
 		}
 	}
@@ -45,7 +44,7 @@ public class ConferenceRoom extends RentalUnit {
 	 */
 	@Override
 	public Lease reserve(Client cli, LocalDate start, int dur, int ocu) throws RentalCapacityException, RentalDateException{
-		if (ocu > MAX_CAPACITY) {
+		if (ocu > super.getCapacity()) {
 			throw new RentalCapacityException();
 		}
 		if (dur > MAX_DURATION) {
@@ -80,16 +79,7 @@ public class ConferenceRoom extends RentalUnit {
 	 * @return list of cancelled leases
 	 */
 	public SortedList<Lease> removeFromServiceStarting(LocalDate start) {
-		SortedLinkedListWithIterator<Lease> cancel = new SortedLinkedListWithIterator<Lease>();
-		for (int i = 0; i < myLeases.size(); i++) {
-			if (myLeases.get(i).getStart().isEqual(start) || myLeases.get(i).getStart().isAfter(start)) {
-				cancel.add(myLeases.get(i));
-				myLeases.remove(i);
-			} else if (myLeases.get(i).getEnd().isAfter(start)) {
-				myLeases.get(i).setEndDateEarlier(start);
-			}
-		}
-		return cancel;
+		return super.removeFromServiceStarting(start);
 	}
 	
 	/**

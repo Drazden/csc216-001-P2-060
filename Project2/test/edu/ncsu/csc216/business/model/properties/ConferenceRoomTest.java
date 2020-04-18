@@ -27,7 +27,7 @@ public class ConferenceRoomTest {
 		assertEquals(10, room.getFloor());
 		assertEquals(10, room.getRoom());
 		assertEquals(true, room.isInService());
-		assertEquals("Conference Room: 10, 10, 10", room.getDescription());
+		assertEquals("Conference Room: 10, 10 | 10", room.getDescription());
 		assertTrue(room.equals(room));
 		assertEquals(0, room.compareTo(room));
 		

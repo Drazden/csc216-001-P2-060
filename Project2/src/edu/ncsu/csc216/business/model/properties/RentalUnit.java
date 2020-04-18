@@ -50,7 +50,11 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 	 * @throws IllegalArgumentException for invalid location or capacity is less than 1
 	 */
 	public RentalUnit(String loc, int cap) {
-		if (cap < 0) {
+		if (cap < 1) {
+			throw new IllegalArgumentException();
+		}
+		
+		if (loc == null | loc.isEmpty()) {
 			throw new IllegalArgumentException();
 		}
 		

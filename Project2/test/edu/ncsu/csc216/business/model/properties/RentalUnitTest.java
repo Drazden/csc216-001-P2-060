@@ -32,7 +32,27 @@ public class RentalUnitTest {
 		RentalUnit unit2 = new ConferenceRoom("10-10", 10);
 		assertTrue(unit.equals(unit2));
 		
+		RentalUnit u = null;
+		try {
+			u = new ConferenceRoom("", -1);
+		} catch (IllegalArgumentException e) {
+			e.getMessage();
+		}
 		
+		try {
+			u = new ConferenceRoom("", 1);
+		} catch (IllegalArgumentException e) {
+			e.getMessage();
+		}
+		
+		try {
+			u = new ConferenceRoom("0-0", 1);
+		} catch (IllegalArgumentException e) {
+			e.getMessage();
+		}
+		assertEquals(null, u);
+		
+		assertEquals(1281, unit.hashCode());
 	}
 	
 	/**

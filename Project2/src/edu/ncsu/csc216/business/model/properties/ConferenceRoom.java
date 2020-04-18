@@ -61,6 +61,22 @@ public class ConferenceRoom extends RentalUnit {
 		LocalDate end = start.plusDays(dur - 1);
 		super.checkDates(start, end);
 		Lease lease = new Lease(cli, me, start, end, ocu);
+		
+		for (int i = 0; i < myLeases.size(); i++) {
+			if (lease.getStart().equals(myLeases.get(i).getStart())) {
+				throw new RentalDateException();
+			}
+			
+			if (lease.getStart().isBefore(myLeases.get(i).getStart()) && myLeases.get(i).getEnd().isBefore(lease.getEnd())) {
+				throw new RentalDateException();
+			}
+			
+			if (myLeases.get(i).getStart().isBefore(lease.getStart()) && lease.getStart().isBefore(myLeases.get(i).getEnd())) {
+				throw new RentalDateException();
+			}
+		}
+		
+		
 		myLeases.add(lease);
 		return lease;
 	}
@@ -86,6 +102,7 @@ public class ConferenceRoom extends RentalUnit {
 		}
 		
 		super.checkDates(start, end);
+		
 		myLeases.add(lease);
 		return lease;
 	}

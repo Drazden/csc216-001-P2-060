@@ -192,7 +192,7 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 	 * @throws RentalOutOfServiceException if unit is not in service
 	 */
 	protected void checkLeaseConditions(Client cli, LocalDate start, int dur, int ocu) throws RentalOutOfServiceException {
-		if (cli == null || start == null || dur < 1 || ocu < 1) {
+		if (cli == null || start == null || dur < 1 || ocu < 1 || ocu > capacity) {
 			throw new IllegalArgumentException();
 		}
 		if (!isInService()) {

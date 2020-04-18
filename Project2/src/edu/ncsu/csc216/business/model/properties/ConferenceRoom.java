@@ -78,8 +78,7 @@ public class ConferenceRoom extends RentalUnit {
 	public Lease recordExistingLease(int con, Client cli, LocalDate start, LocalDate end, int ocu) throws RentalDateException, RentalOutOfServiceException {
 		Lease lease = new Lease(con, cli, this, start, end, ocu);
 		Period p = Period.between(start, end);
-		p.plusDays(1);
-		super.checkLeaseConditions(cli, start, p.getDays(), ocu);
+		super.checkLeaseConditions(cli, start, p.getDays() + 1, ocu);
 		super.checkDates(start, end);
 		myLeases.add(lease);
 		return lease;

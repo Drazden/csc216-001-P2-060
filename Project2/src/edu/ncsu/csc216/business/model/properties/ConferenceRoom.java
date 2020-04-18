@@ -56,6 +56,7 @@ public class ConferenceRoom extends RentalUnit {
 		super.checkLeaseConditions(cli, start, dur, ocu);
 		
 		
+		
 		RentalUnit me = this;
 		LocalDate end = start.plusDays(dur - 1);
 		super.checkDates(start, end);
@@ -79,6 +80,11 @@ public class ConferenceRoom extends RentalUnit {
 		Lease lease = new Lease(con, cli, this, start, end, ocu);
 		Period p = Period.between(start, end);
 		super.checkLeaseConditions(cli, start, p.getDays() + 1, ocu);
+		
+		if (p.getDays() + 1 > MAX_DURATION) {
+			throw new RentalDateException();
+		}
+		
 		super.checkDates(start, end);
 		myLeases.add(lease);
 		return lease;

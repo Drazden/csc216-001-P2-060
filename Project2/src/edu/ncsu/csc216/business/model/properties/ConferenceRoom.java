@@ -51,7 +51,7 @@ public class ConferenceRoom extends RentalUnit {
 			throw new RentalDateException();
 		}
 		RentalUnit me = this;
-		LocalDate end = start.plusDays(dur);
+		LocalDate end = start.plusDays(dur - 1);
 		Lease lease = new Lease(cli, me, start, end, ocu);
 		myLeases.add(lease);
 		return lease;
@@ -64,10 +64,15 @@ public class ConferenceRoom extends RentalUnit {
 	 * @param end end date
 	 * @param ocu occupants
 	 * @return new lease
+	 * @throws RentalDateException if duration over 7 days
 	 */
 	@Override
-	public Lease recordExistingLease(int con, Client cli, LocalDate start, LocalDate end, int ocu) {
+	public Lease recordExistingLease(int con, Client cli, LocalDate start, LocalDate end, int ocu) throws RentalDateException {
 		Lease lease = new Lease(con, cli, this, start, end, ocu);
+		if ((lease.getEnd().getDayOfMonth() - lease.getStart().getDayOfMonth() - 1) > MAX_DURATION) {
+			throw new RentalDateException();
+		}
+		
 		myLeases.add(lease);
 		return lease;
 	}

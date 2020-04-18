@@ -53,7 +53,7 @@ public class ConferenceRoomTest {
 		
 		Client client = new Client("Jacob", "Jac");
 		LocalDate start = LocalDate.of(2020, 4, 10);
-		LocalDate end = LocalDate.of(2020, 4, 17);
+		LocalDate end = LocalDate.of(2020, 4, 16);
 		Lease lease = new Lease(0, client, unit, start, end, 1);
 		
 		Lease reserve = null;

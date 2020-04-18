@@ -1,6 +1,7 @@
 package edu.ncsu.csc216.business.model.properties;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 import edu.ncsu.csc216.business.list_utils.SortedList;
 import edu.ncsu.csc216.business.model.contracts.Lease;
@@ -73,9 +74,11 @@ public class ConferenceRoom extends RentalUnit {
 	 */
 	@Override
 	public Lease recordExistingLease(int con, Client cli, LocalDate start, LocalDate end, int ocu) throws RentalDateException, RentalOutOfServiceException {
-		super.checkLeaseConditions(cli, start, 1, ocu);
 		Lease lease = new Lease(con, cli, this, start, end, ocu);
-		if ((lease.getEnd().getDayOfMonth() - lease.getStart().getDayOfMonth() - 1) > MAX_DURATION) {
+		Period p = Period.between(start, end);
+		p.plusDays(1);
+		super.checkLeaseConditions(cli, start, p.getDays(), ocu);
+		if (p.getDays() > MAX_DURATION) {
 			throw new RentalDateException();
 		}
 		

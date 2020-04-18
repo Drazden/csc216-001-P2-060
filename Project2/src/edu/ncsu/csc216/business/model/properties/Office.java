@@ -14,7 +14,7 @@ import edu.ncsu.csc216.business.model.stakeholders.Client;
 public class Office extends RentalUnit {
 
 	/** Max capacity for office **/
-	private static final int MAX_CAPACITY = 0;
+	private static final int MAX_CAPACITY = 150;
 	
 	/** Number of calendar rows **/
 	private static final int CAL_ROWS = 0;

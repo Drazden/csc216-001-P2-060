@@ -68,19 +68,19 @@ public class ConferenceRoom extends RentalUnit {
 			LocalDate s = myLeases.get(i).getStart();
 			LocalDate e = myLeases.get(i).getEnd();
 			
-			if (nS.equals(s)) {
+			if (nS.equals(s) || s.equals(nS)) {
 				throw new RentalDateException();
 			}
 			
-			if (nE.equals(e)) {
+			if (nE.equals(e) || e.equals(nE)) {
 				throw new RentalDateException();
 			}
 			
-			if (nS.equals(e)) {
+			if (nS.equals(e) || e.equals(nS)) {
 				throw new RentalDateException();
 			}
 			
-			if (nE.equals(s)) {
+			if (nE.equals(s) || s.equals(nE)) {
 				throw new RentalDateException();
 			}
 			

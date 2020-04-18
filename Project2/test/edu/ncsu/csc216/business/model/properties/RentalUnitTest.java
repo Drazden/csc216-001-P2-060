@@ -73,6 +73,17 @@ public class RentalUnitTest {
 		
 		assertEquals(lease, unit.cancelLeaseByNumber(999999));
 		
+		Lease leaseB = null;
+		try { 
+			leaseB = new Lease(0, client, unit, end, start, 1);
+			unit.addLease(leaseB);
+		} catch (IllegalArgumentException e) {
+			e.getMessage();
+		}
+		
+		String leases2[] = unit.listLeases();
+		
+		assertEquals(0, leases2.length);
 	}
 	
 	/**
@@ -103,4 +114,20 @@ public class RentalUnitTest {
 		assertEquals(newEnd, lease.getEnd());
 	}
 
+	/**
+	 * Tests compare method
+	 */
+	@Test
+	public void testCompare() {
+		RentalUnit unit1 = new ConferenceRoom("10-10", 10);
+		RentalUnit unit2 = new ConferenceRoom("10-11", 10);
+		RentalUnit unit3 = new ConferenceRoom("10-12", 10);
+		RentalUnit unit4 = new ConferenceRoom("11-10", 10);
+		
+		
+		assertEquals(-1, unit1.compareTo(unit2));
+		assertEquals(-1, unit2.compareTo(unit3));
+		assertEquals(-1, unit3.compareTo(unit4));
+		assertEquals(1, unit4.compareTo(unit1));
+	}
 }

@@ -176,7 +176,7 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 	public void checkDates(LocalDate start, LocalDate end) throws RentalDateException {
 		LocalDate min = LocalDate.of(2020, 1, 1);
 		LocalDate max = LocalDate.of(2029, 12, 31);
-		if (start.isBefore(min) || start.isAfter(max) || end.isBefore(min) || end.isAfter(max) || end.isBefore(end)) {
+		if (start.isBefore(min) || start.isAfter(max) || end.isBefore(min) || end.isAfter(max) || end.isBefore(start)) {
 			throw new RentalDateException();
 		}
 	}

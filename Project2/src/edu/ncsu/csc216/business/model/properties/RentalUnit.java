@@ -332,8 +332,6 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
 		RentalUnit other = (RentalUnit) obj;
 		if (floor != other.floor)
 			return false;

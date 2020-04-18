@@ -88,7 +88,7 @@ public class HotelSuite extends RentalUnit {
 	 * @param end end date
 	 * @throws RentalDateException if the dates are invalid
 	 */
-	public void checkDates(LocalDate start, LocalDate end) {
-		//not yet implemented
+	public void checkDates(LocalDate start, LocalDate end) throws RentalDateException {
+		super.checkDates(start, end);
 	}
 }

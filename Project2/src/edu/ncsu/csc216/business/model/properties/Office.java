@@ -109,7 +109,7 @@ public class Office extends RentalUnit {
 	 * @throws RentalDateException if the dates are invalid
 	 */
 	public void checkDates(LocalDate start, LocalDate end) throws RentalDateException {
-		//not yet implemented
+		super.checkDates(start, end);
 	}
 
 }

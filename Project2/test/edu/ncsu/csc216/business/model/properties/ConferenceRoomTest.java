@@ -69,6 +69,55 @@ public class ConferenceRoomTest {
 			fail();
 		}
 		
+		try {
+			unit.reserve(client, start, 7, 1);
+		} catch (IllegalArgumentException e1) {
+			fail();
+		} catch (RentalOutOfServiceException e1) {
+			fail();
+		} catch (RentalDateException e1) {
+			e1.getMessage();
+		} catch (RentalCapacityException e1) {
+			fail();
+		}
+		
+		try {
+			unit.reserve(client, start, 6, 1);
+		} catch (IllegalArgumentException e1) {
+			fail();
+		} catch (RentalOutOfServiceException e1) {
+			fail();
+		} catch (RentalDateException e1) {
+			e1.getMessage();
+		} catch (RentalCapacityException e1) {
+			fail();
+		}
+		
+		try {
+			unit.reserve(client, start.plusDays(1), 6, 1);
+		} catch (IllegalArgumentException e1) {
+			fail();
+		} catch (RentalOutOfServiceException e1) {
+			fail();
+		} catch (RentalDateException e1) {
+			e1.getMessage();
+		} catch (RentalCapacityException e1) {
+			fail();
+		}
+		
+		try {
+			unit.reserve(client, start.minusDays(1), 6, 1);
+		} catch (IllegalArgumentException e1) {
+			fail();
+		} catch (RentalOutOfServiceException e1) {
+			fail();
+		} catch (RentalDateException e1) {
+			e1.getMessage();
+		} catch (RentalCapacityException e1) {
+			fail();
+		}
+		
+		
 		assertEquals(lease.getClient(), reserve.getClient());
 		assertEquals(lease.getNumOccupants(), reserve.getNumOccupants());
 		assertEquals(lease.getStart(), reserve.getStart());
@@ -102,6 +151,7 @@ public class ConferenceRoomTest {
 		} catch (RentalOutOfServiceException e) {
 			fail();
 		}
+		
 	}
 
 }

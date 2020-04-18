@@ -63,17 +63,27 @@ public class ConferenceRoom extends RentalUnit {
 		Lease lease = new Lease(cli, me, start, end, ocu);
 		
 		for (int i = 0; i < myLeases.size(); i++) {
-			if (lease.getStart().equals(myLeases.get(i).getStart())) {
+			LocalDate nS = lease.getStart();
+			LocalDate nE = lease.getEnd();
+			LocalDate s = myLeases.get(i).getStart();
+			LocalDate e = myLeases.get(i).getEnd();
+			
+			if (nS.equals(s)) {
 				throw new RentalDateException();
 			}
 			
-			if (lease.getStart().isBefore(myLeases.get(i).getStart()) && myLeases.get(i).getEnd().isBefore(lease.getEnd())) {
+			if (nE.equals(e)) {
 				throw new RentalDateException();
 			}
 			
-			if (myLeases.get(i).getStart().isBefore(lease.getStart()) && lease.getStart().isBefore(myLeases.get(i).getEnd())) {
+			if (nS.isBefore(s) && nE.isAfter(s)) {
 				throw new RentalDateException();
 			}
+			
+			if (nS.isBefore(e) && nE.isAfter(e)) {
+				throw new RentalDateException();
+			}
+			
 		}
 		
 		

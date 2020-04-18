@@ -78,10 +78,7 @@ public class ConferenceRoom extends RentalUnit {
 		Period p = Period.between(start, end);
 		p.plusDays(1);
 		super.checkLeaseConditions(cli, start, p.getDays(), ocu);
-		//if (p.getDays() > MAX_DURATION) {
-		//	throw new RentalDateException();
-		//}
-		
+		super.checkDates(start, end);
 		myLeases.add(lease);
 		return lease;
 	}

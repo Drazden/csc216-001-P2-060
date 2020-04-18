@@ -92,6 +92,10 @@ public class ConferenceRoom extends RentalUnit {
 				throw new RentalDateException();
 			}
 			
+			if (nS.isAfter(s) && nE.isBefore(e)) {
+				throw new RentalDateException();
+			}
+			
 		}
 		
 		

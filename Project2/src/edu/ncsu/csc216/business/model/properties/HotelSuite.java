@@ -116,6 +116,10 @@ public class HotelSuite extends RentalUnit {
 		super.checkLeaseConditions(cli, start, p.getDays() + 1, ocu);
 		super.checkDates(start, end);
 		
+		if (start.equals(end)) {
+			throw new RentalDateException();
+		}
+		
 		for (int i = 0; i < myLeases.size(); i++) {
 			LocalDate nS = lease.getStart();
 			LocalDate nE = lease.getEnd();
@@ -158,7 +162,7 @@ public class HotelSuite extends RentalUnit {
 	public SortedList<Lease> removeFromServiceStarting(LocalDate start) {
 		SortedLinkedListWithIterator<Lease> cancel = new SortedLinkedListWithIterator<Lease>();
 		for (int i = 0; i < myLeases.size(); i++) {
-			if (myLeases.get(i).getStart().isEqual(start)) {
+			if (myLeases.get(i).getStart().isEqual(start) || myLeases.get(i).getStart().isAfter(start)) {
 				cancel.add(myLeases.get(i));
 				myLeases.remove(i);
 			} else if (myLeases.get(i).getEnd().isAfter(start)) {
@@ -186,9 +190,6 @@ public class HotelSuite extends RentalUnit {
 	 */
 	public void checkDates(LocalDate start, LocalDate end) throws RentalDateException {
 		super.checkDates(start, end);
-		if (start.equals(end)) {
-			throw new RentalDateException();
-		}
 		
 		if (start.getDayOfWeek().getValue() != 7 || end.getDayOfWeek().getValue() != 7) {
 			throw new RentalDateException();

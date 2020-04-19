@@ -38,6 +38,12 @@ public class Office extends RentalUnit {
 			throw new IllegalArgumentException();
 		}
 		calendar = new int[CAL_ROWS][CAL_COLS];
+		for (int i = 0; i < CAL_ROWS; i++) {
+			for (int j = 0; j < CAL_COLS; j++) {
+				calendar[i][j] = cap;
+			}
+			
+		}
 	}
 
 	/**
@@ -73,7 +79,7 @@ public class Office extends RentalUnit {
 		
 		LocalDate current = start;
 		while (!current.equals(end.plusDays(1))) {
-			if (remainingCapacityFor(current) + ocu > super.getCapacity()) {
+			if (ocu > remainingCapacityFor(current)) {
 				throw new RentalCapacityException();
 			}
 			current = current.plusDays(1);
@@ -83,7 +89,7 @@ public class Office extends RentalUnit {
 		
 		current = start;
 		while (!current.equals(end.plusDays(1))) {
-			calendar[current.getMonthValue()][current.getDayOfMonth()] = ocu;
+			calendar[current.getMonthValue()][current.getDayOfMonth()] -= ocu;
 			current = current.plusDays(1);
 		}
 		
@@ -112,7 +118,7 @@ public class Office extends RentalUnit {
 		
 		LocalDate current = start;
 		while (!current.equals(end.plusDays(1))) {
-			if (remainingCapacityFor(current) + ocu > super.getCapacity()) {
+			if (ocu > remainingCapacityFor(current)) {
 				throw new RentalCapacityException();
 			}
 			current = current.plusDays(1);
@@ -120,7 +126,7 @@ public class Office extends RentalUnit {
 		
 		current = start;
 		while (!current.equals(end.plusDays(1))) {
-			calendar[current.getMonthValue()][current.getDayOfMonth()] = ocu;
+			calendar[current.getMonthValue()][current.getDayOfMonth()] -= ocu;
 			current = current.plusDays(1);
 		}
 		

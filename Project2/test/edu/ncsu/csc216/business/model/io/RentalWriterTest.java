@@ -11,11 +11,15 @@ import org.junit.Test;
 public class RentalWriterTest {
 
 	/**
-	 * Default test
+	 * Tests rental writer
 	 */
 	@Test
 	public void test() {
-		fail("Not yet implemented");
+		RentalWriter writer = new RentalWriter();
+		assertNotEquals(null, writer);
+		
+		RentalWriter.writeRentalFile("test-files/writeroutput");
+		
 	}
 
 }

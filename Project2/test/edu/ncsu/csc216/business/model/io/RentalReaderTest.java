@@ -13,7 +13,7 @@ import org.junit.Test;
 public class RentalReaderTest {
 
 	/**
-	 * Default test
+	 * Tests rental reader
 	 */
 	@Test
 	public void testRead() {

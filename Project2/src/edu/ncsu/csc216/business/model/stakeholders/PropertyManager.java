@@ -69,13 +69,13 @@ public class PropertyManager {
 	
 	/**
 	 * Adds a new unit
-	 * @param floor floor of unit
-	 * @param room room of unit
+	 * @param kind type of unit
+	 * @param loc location of unit
 	 * @param cap capacity
 	 * @return new unit
 	 * @throws DuplicateRoomException if unit already exists
 	 */
-	public RentalUnit addNewUnit(String floor, String room, int cap) throws DuplicateRoomException{
+	public RentalUnit addNewUnit(String kind, String loc, int cap) throws DuplicateRoomException{
 		return null;
 	}
 	

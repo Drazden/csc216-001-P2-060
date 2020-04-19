@@ -1,6 +1,7 @@
 package edu.ncsu.csc216.business.model.properties;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 import edu.ncsu.csc216.business.list_utils.SortedList;
 import edu.ncsu.csc216.business.model.contracts.Lease;
@@ -23,6 +24,7 @@ public class HotelSuite extends RentalUnit {
 	 */
 	public HotelSuite(String loc) {
 		super(loc, 1);
+		
 	}
 	
 	/**
@@ -33,6 +35,9 @@ public class HotelSuite extends RentalUnit {
 	 */
 	public HotelSuite(String loc, int cap) {
 		super(loc, cap);
+		if (cap > MAX_CAPACITY) {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	/**
@@ -44,10 +49,60 @@ public class HotelSuite extends RentalUnit {
 	 * @return new Lease
 	 * @throws RentalDateException if start/end dates are not sundays or conflict
 	 * @throws RentalCapacityException if exceeds capacity
+	 * @throws RentalOutOfServiceException if unit not in service
 	 */
 	@Override
-	public Lease reserve(Client cli, LocalDate start, int dur, int ocu) throws RentalDateException, RentalCapacityException{
-		return null;
+	public Lease reserve(Client cli, LocalDate start, int dur, int ocu) throws RentalDateException, RentalCapacityException, RentalOutOfServiceException{
+		if (ocu > super.getCapacity()) {
+			throw new RentalCapacityException();
+		}
+		
+		super.checkLeaseConditions(cli, start, dur, ocu);
+		
+		RentalUnit me = this;
+		LocalDate end = start.plusWeeks(dur);
+		checkDates(start, end);
+		Lease lease = new Lease(cli, me, start, end, ocu);
+		
+		for (int i = 0; i < myLeases.size(); i++) {
+			LocalDate nS = lease.getStart();
+			LocalDate nE = lease.getEnd();
+			LocalDate s = myLeases.get(i).getStart();
+			LocalDate e = myLeases.get(i).getEnd();
+			
+			if (nS.equals(s) || s.equals(nS)) {
+				throw new RentalDateException();
+			}
+			
+			if (nE.equals(e) || e.equals(nE)) {
+				throw new RentalDateException();
+			}
+			
+//			if (nS.equals(e) || e.equals(nS)) {
+//				throw new RentalDateException();
+//			}
+//			
+//			if (nE.equals(s) || s.equals(nE)) {
+//				throw new RentalDateException();
+//			}
+			
+			if (nS.isBefore(s) && nE.isAfter(s)) {
+				throw new RentalDateException();
+			}
+			
+			if (nS.isBefore(e) && nE.isAfter(e)) {
+				throw new RentalDateException();
+			}
+			
+			if (nS.isAfter(s) && nE.isBefore(e)) {
+				throw new RentalDateException();
+			}
+			
+		}
+		
+		
+		myLeases.add(lease);
+		return lease;
 	}
 
 	/**
@@ -58,10 +113,18 @@ public class HotelSuite extends RentalUnit {
 	 * @param end end date
 	 * @param ocu occupants
 	 * @return new lease
+	 * @throws RentalOutOfServiceException if unit not in service
+	 * @throws RentalDateException if date is invalid
 	 */
 	@Override
-	public Lease recordExistingLease(int con, Client cli, LocalDate start, LocalDate end, int ocu) {
-		return null;
+	public Lease recordExistingLease(int con, Client cli, LocalDate start, LocalDate end, int ocu) throws RentalOutOfServiceException, RentalDateException {
+		Lease lease = new Lease(con, cli, this, start, end, ocu);
+		Period p = Period.between(start, end);
+		super.checkLeaseConditions(cli, start, p.getDays() + 1, ocu);
+		super.checkDates(start, end);
+		
+		myLeases.add(lease);
+		return lease;
 	}
 
 	/**
@@ -71,8 +134,8 @@ public class HotelSuite extends RentalUnit {
 	 * @return list of cancelled leases
 	 */
 	public SortedList<Lease> removeFromServiceStarting(LocalDate start) {
-		super.removeFromServiceStarting(start);
-		return null;
+		LocalDate sun = LocalDate.of(start.getYear(), start.getMonth(), start.getDayOfMonth() + 7 - start.getDayOfWeek().getValue());
+		return super.removeFromServiceStarting(sun);
 	}
 	
 	/**
@@ -80,7 +143,8 @@ public class HotelSuite extends RentalUnit {
 	 * @return floor, room, capacity, availability
 	 */
 	public String getDescription() {
-		return null;
+		String ret = "Hotel Suite: " + super.getDescription();
+		return ret;
 	}
 	
 	/**
@@ -91,5 +155,8 @@ public class HotelSuite extends RentalUnit {
 	 */
 	public void checkDates(LocalDate start, LocalDate end) throws RentalDateException {
 		super.checkDates(start, end);
+		if (start.getDayOfWeek().getValue() != 7 || end.getDayOfWeek().getValue() != 7) {
+			throw new RentalDateException();
+		}
 	}
 }

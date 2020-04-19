@@ -59,7 +59,7 @@ public class Office extends RentalUnit {
 	 */
 	@Override
 	public Lease reserve(Client cli, LocalDate start, int dur, int ocu) throws RentalDateException, RentalCapacityException, RentalOutOfServiceException{
-		if (ocu > super.getCapacity()) {
+		if (ocu > remainingCapacityFor(start)) {
 			throw new RentalCapacityException();
 		}
 		
@@ -91,7 +91,6 @@ public class Office extends RentalUnit {
 		while (!current.getMonth().equals(end.getMonth().plus(1))) {
 			calendar[current.getYear() - 2020][current.getMonthValue() - 1] -= ocu;
 			current = current.plusMonths(1);
-			System.out.println(current);
 		} 
 		
 		
@@ -112,6 +111,11 @@ public class Office extends RentalUnit {
 	 */
 	@Override
 	public Lease recordExistingLease(int con, Client cli, LocalDate start, LocalDate end, int ocu) throws RentalOutOfServiceException, RentalDateException, RentalCapacityException {
+		if (ocu > remainingCapacityFor(start)) {
+			throw new RentalCapacityException();
+		}
+		
+		
 		Lease lease = new Lease(con, cli, this, start, end, ocu);
 		Period p = Period.between(start, end);
 		super.checkLeaseConditions(cli, start, p.getDays() + 1, ocu);
@@ -129,7 +133,6 @@ public class Office extends RentalUnit {
 		while (!current.getMonth().equals(end.getMonth().plus(1))) {
 			calendar[current.getYear() - 2020][current.getMonthValue() - 1] -= ocu;
 			current = current.plusMonths(1);
-			System.out.println(current);
 		} 
 		
 		myLeases.add(lease);

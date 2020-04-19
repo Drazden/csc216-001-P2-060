@@ -27,12 +27,15 @@ public class RentalReader {
 	 * If any errors occur during reading, all data is cleared and an exception is thrown.
 	 * This method is static to allow calling from other classes.
 	 * @param filename String containing name of file to read
-	 * @throws FileNotFoundException if file cant be accessed
 	 * @throws IllegalArgumentException exception thrown if any errors occur
 	 */
-	public static void readRentalData(String filename) throws FileNotFoundException {
-		
-		Scanner s = new Scanner(new FileInputStream(filename));
+	public static void readRentalData(String filename) {
+		Scanner s = null;
+		try {
+			s = new Scanner(new FileInputStream(filename));
+		} catch (FileNotFoundException e) {
+			throw new IllegalArgumentException();
+		}
 		while (s.hasNextLine() && s.nextLine().charAt(0) != '#') {
 			try {
 				processRoom(s.nextLine());

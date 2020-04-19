@@ -19,7 +19,7 @@ public class RentalReaderTest {
 	public void testRead() {
 		try {
 			RentalReader.readRentalData("sample.txt");
-		} catch (FileNotFoundException e) {
+		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		}
 	}

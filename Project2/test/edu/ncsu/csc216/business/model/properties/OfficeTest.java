@@ -137,6 +137,9 @@ public class OfficeTest {
 
 			   e.printStackTrace();
 			}
+		
+		
+		assertNotEquals(null, ll1);
 	}
 
 }

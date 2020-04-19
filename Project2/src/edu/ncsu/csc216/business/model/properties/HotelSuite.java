@@ -174,7 +174,7 @@ public class HotelSuite extends RentalUnit {
 	 * @return floor, room, capacity, availability
 	 */
 	public String getDescription() {
-		String ret = "Hotel Suite:    " + super.getDescription();
+		String ret = "Hotel Suite:     " + super.getDescription();
 		return ret;
 	}
 	
@@ -186,6 +186,10 @@ public class HotelSuite extends RentalUnit {
 	 */
 	public void checkDates(LocalDate start, LocalDate end) throws RentalDateException {
 		super.checkDates(start, end);
+		if (start.equals(end)) {
+			throw new RentalDateException();
+		}
+		
 		if (start.getDayOfWeek().getValue() != 7 || end.getDayOfWeek().getValue() != 7) {
 			throw new RentalDateException();
 		}

@@ -101,5 +101,42 @@ public class OfficeTest {
 		unit.removeFromServiceStarting(start);
 
 	}
+	
+	/**
+	 * Replication of ts test
+	 */
+	@Test
+	public void testtsReplicated() {
+		Lease ll1 = null;
+		Lease ll2 = null;
+		Lease ll3 = null;
+		Lease ll4 = null;
+		Lease ll5 = null;
+		Lease ll6 = null;
+		Lease ll7 = null;
+		Client john = new Client("John", "John");
+		Office p = new Office("10-10", 75);
+				
+		try { 
+
+			   ll1 = p.reserve(john, LocalDate.of(2020, 1, 1), 120, 10); 
+
+			   ll2 = p.reserve(john, LocalDate.of(2021, 3, 1), 100, 8);
+
+			   ll3 = p.reserve(john, LocalDate.of(2020, 2, 1), 13, 5);
+
+			   ll4 = p.reserve(john, LocalDate.of(2021, 4, 1), 98, 5);
+
+			   ll5 = p.reserve(john, LocalDate.of(2029, 4, 1), 2, 15);
+
+			   ll6 = p.reserve(john, LocalDate.of(2022, 4, 1), 50, 5);
+
+			   ll7 = p.reserve(john, LocalDate.of(2023, 1, 1), 30, 5);
+
+			} catch (Exception e) {
+
+			   e.printStackTrace();
+			}
+	}
 
 }

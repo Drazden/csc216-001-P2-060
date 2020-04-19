@@ -18,10 +18,10 @@ public class Office extends RentalUnit {
 	private static final int MAX_CAPACITY = 150;
 	
 	/** Number of calendar rows **/
-	private static final int CAL_ROWS = 12;
+	private static final int CAL_ROWS = 13;
 	
 	/** Number of calendar columns **/
-	private static final int CAL_COLS = 31;
+	private static final int CAL_COLS = 32;
 	
 	/** Calendar for office **/
 	private int[][] calendar;
@@ -62,6 +62,8 @@ public class Office extends RentalUnit {
 		super.checkLeaseConditions(cli, start, dur, ocu);		
 		RentalUnit me = this;
 		LocalDate end = start.plusMonths(dur).minusDays(1);
+		System.out.println(start + " " + end);
+		
 		checkDates(start, end);
 		
 		if (getMonthsDuration(start, end) < 1) {
@@ -166,9 +168,21 @@ public class Office extends RentalUnit {
 			throw new RentalDateException();
 		}
 			
-		if (end.getDayOfMonth() != end.getMonth().maxLength()) {
+		
+		if (end.getMonthValue() == 2) {
+			if (end.isLeapYear()) {
+				if (end.getDayOfMonth() != 29) {
+					throw new RentalDateException();
+				} 
+			} else {
+				if (end.getDayOfMonth() != 28) {
+					throw new RentalDateException();
+				}
+			}
+		} else if (end.getDayOfMonth() != end.getMonth().maxLength()) {
 			throw new RentalDateException();
-		}
+		} 
+		
 	}
 
 }

@@ -122,6 +122,19 @@ public class HotelSuiteTest {
 		}
 		
 		
+		try {
+			unit.reserve(client, start.minusWeeks(1), 2, 1);
+		} catch (IllegalArgumentException e1) {
+			fail();
+		} catch (RentalOutOfServiceException e1) {
+			fail();
+		} catch (RentalDateException e1) {
+			e1.getMessage();
+		} catch (RentalCapacityException e1) {
+			fail();
+		}
+		
+		
 		assertEquals(lease.getClient(), reserve.getClient());
 		assertEquals(lease.getNumOccupants(), reserve.getNumOccupants());
 		assertEquals(lease.getStart(), reserve.getStart());

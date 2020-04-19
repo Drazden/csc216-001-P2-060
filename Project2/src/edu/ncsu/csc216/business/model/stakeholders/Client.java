@@ -88,7 +88,7 @@ public class Client {
 	 * @throws IllegalArgumentException if lease is not this clients lease
 	 */
 	public void addNewLease(Lease lease) {
-		if (lease.getClient() != this) {
+		if (lease.getClient().getId() != getId()) {
 			throw new IllegalArgumentException();
 		}
 		myLeases.add(lease);

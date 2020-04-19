@@ -5,6 +5,12 @@ import java.time.LocalDate;
 import edu.ncsu.csc216.business.list_utils.SimpleArrayList;
 import edu.ncsu.csc216.business.list_utils.SortedLinkedListWithIterator;
 import edu.ncsu.csc216.business.model.contracts.Lease;
+import edu.ncsu.csc216.business.model.properties.ConferenceRoom;
+import edu.ncsu.csc216.business.model.properties.HotelSuite;
+import edu.ncsu.csc216.business.model.properties.Office;
+import edu.ncsu.csc216.business.model.properties.RentalCapacityException;
+import edu.ncsu.csc216.business.model.properties.RentalDateException;
+import edu.ncsu.csc216.business.model.properties.RentalOutOfServiceException;
 import edu.ncsu.csc216.business.model.properties.RentalUnit;
 
 /**
@@ -53,6 +59,9 @@ public class PropertyManager {
 	PropertyManager() {
 		customerBase = new SimpleArrayList<Client>();	
 		rooms = new SortedLinkedListWithIterator<RentalUnit>();
+		inServiceFilter = false;
+		kindFilter = null;
+		Lease.resetConfirmationNumbering(0);
 	}
 
 	
@@ -64,7 +73,16 @@ public class PropertyManager {
 	 * @throws DuplicateClientException if client already exists
 	 */
 	public Client addNewClient(String name, String id) throws DuplicateClientException{
-		return null;
+		Client client = new Client(name, id);
+		
+		for (int i = 0; i < customerBase.size(); i++) {
+			if (customerBase.get(i).equals(client)) {
+				throw new DuplicateClientException();
+			}
+		}
+		
+		customerBase.add(client);
+		return client;
 	}
 	
 	/**
@@ -76,7 +94,23 @@ public class PropertyManager {
 	 * @throws DuplicateRoomException if unit already exists
 	 */
 	public RentalUnit addNewUnit(String kind, String loc, int cap) throws DuplicateRoomException{
-		return null;
+		RentalUnit unit;
+		if (kind.equals("O")) {
+			unit = new Office(loc, cap);
+		} else if (kind.equals("H")) {
+			unit = new HotelSuite(loc, cap);
+		} else {
+			unit = new ConferenceRoom(loc, cap);
+		}
+		
+		for (int i = 0; i < rooms.size(); i++) {
+			if (rooms.get(i).equals(unit)) {
+				throw new DuplicateRoomException();
+			}
+		}
+		
+		rooms.add(unit);
+		return unit;
 	}
 	
 	/**
@@ -90,7 +124,32 @@ public class PropertyManager {
 	 * @throws IllegalArgumentException for any errors
 	 */
 	public void addLeaseFromFile(Client cli, int con, RentalUnit r, LocalDate start, LocalDate end, int ocu) {
-		//not yet implemented
+		Boolean c = false;
+		int client = -1;
+		for (int i = 0; i < customerBase.size(); i++) {
+			if (customerBase.get(i).equals(cli)) {
+				client = i;
+				c = true;
+			}
+		}
+		
+		Boolean u = false;
+		int room = -1;
+		for (int i = 0; i < rooms.size(); i++) {
+			if (rooms.get(i).equals(r)) {
+				room = i;
+				u = true;
+			}
+		}
+		
+		if (!c || !u) {
+			throw new IllegalArgumentException();
+		}
+		
+		Lease l = new Lease(con, cli, r, start, end, ocu);
+		rooms.get(room).addLease(l);
+		customerBase.get(client).addNewLease(l);
+		
 	}
 	
 	/**
@@ -99,33 +158,34 @@ public class PropertyManager {
 	 * @param con confirmation number of lease
 	 */
 	public void cancelClientsLease(int idx, int con) {
-		//not yet implemented
+		customerBase.get(idx).cancelLeaseWithNumber(con);
 	}
 	
 	/**
 	 * Returns a unit to service
-	 * @param loc location of unit
+	 * @param idx index of room to return to service
 	 */
-	public void returnToService(int loc) {
-		//not yet implemented
+	public void returnToService(int idx) {
+		rooms.get(idx).returnToService();
 	}
 	
 	/**
 	 * Removes a unit from serivce
-	 * @param loc location of unit
+	 * @param idx index of unit
 	 * @param start start date
 	 * @return closed unit
 	 */
-	public RentalUnit removeFromService(int loc, LocalDate start) {
-		return null;
+	public RentalUnit removeFromService(int idx, LocalDate start) {
+		rooms.get(idx).removeFromServiceStarting(start);
+		return rooms.get(idx);
 	}
 	
 	/**
 	 * Permanently closes a unit
-	 * @param loc location of unit
+	 * @param idx index of unit
 	 */
-	public void closeRentalUnit(int loc) {
-		//not yet implemented
+	public void closeRentalUnit(int idx) {
+		rooms.remove(idx);
 	}
 	
 	/**
@@ -137,8 +197,17 @@ public class PropertyManager {
 	 * @param ocu occupants
 	 * @return new lease
 	 */
-	public Lease createLease(int con, int cli, LocalDate start, int dur, int ocu) {
-		return null;
+	public Lease createLease(int r, int cli, LocalDate start, int dur, int ocu) {
+		Lease lease;
+		try {
+			lease = rooms.get(r).reserve(customerBase.get(cli), start, dur, ocu);
+		} catch (IllegalArgumentException | RentalOutOfServiceException | RentalDateException
+				| RentalCapacityException e) {
+			e.printStackTrace();
+			throw new IllegalArgumentException();
+		}
+		customerBase.get(cli).addNewLease(lease);
+		return lease;
 	}
 	
 	/**
@@ -146,7 +215,11 @@ public class PropertyManager {
 	 * @return string array of clients
 	 */
 	public String[] listClients() {
-		return null;
+		String[] clients = new String[customerBase.size()];
+		for (int i = 0; i < customerBase.size(); i++) {
+			clients[i] = customerBase.get(i).toString();
+		}
+		return clients;
 	}
 	
 	/**
@@ -155,7 +228,7 @@ public class PropertyManager {
 	 * @return string array of leases
 	 */
 	public String[] listClientLeases(int idx) {
-		return null;
+		return customerBase.get(idx).listLeases();
 	}
 	
 	/**
@@ -163,7 +236,42 @@ public class PropertyManager {
 	 * @return string array of units
 	 */
 	public String[] listRentalUnits() {
-		return null;
+		String[] units = new String[rooms.size()];
+		for (int i = 0; i < rooms.size(); i++) {
+			String unit = rooms.get(i).getDescription();
+			
+			if (inServiceFilter) {
+				if (rooms.get(i).isInService()) {
+					units[i] = unit;
+				}
+			}
+			
+			if (kindFilter != null && !kindFilter.isEmpty()) {
+				if (kindFilter.toUpperCase().equals("H")) {
+					if(unit.contains("Hotel")) {
+						units[i] = unit;
+					}
+				}
+				
+				if (kindFilter.toUpperCase().equals("C")) {
+					if(unit.contains("Conference")) {
+						units[i] = unit;
+					}
+				}
+				
+				if (kindFilter.toUpperCase().equals("O")) {
+					if(unit.contains("Office")) {
+						units[i] = unit;
+					}
+				}
+			}
+			
+			if (!inServiceFilter) {
+				units[i] = unit;
+			}
+			
+		}
+		return units;
 	}
 	
 	/**
@@ -172,7 +280,7 @@ public class PropertyManager {
 	 * @return string array of leases
 	 */
 	public String[] listLeasesForRentalUnit(int idx) {
-		return null;
+		return rooms.get(idx).listLeases();
 	}
 	
 	/**
@@ -181,7 +289,14 @@ public class PropertyManager {
 	 * @return found unit
 	 */
 	public RentalUnit getUnitAtLocation(String loc) {
-		return null;
+		for (int i = 0; i < rooms.size(); i++) {
+			String location = rooms.get(i).getFloor() + "-" + rooms.get(i).getRoom();
+			if (location.equals(loc)) {
+				return rooms.get(i);
+			}
+		}
+		
+		throw new IllegalArgumentException();
 	}
 	
 	/**
@@ -190,14 +305,20 @@ public class PropertyManager {
 	 * @param avail if room is in service
 	 */
 	public void filterRentalUnits(String kind, boolean avail) {
-		//not yet implemented
+		kindFilter = kind;
+		inServiceFilter = avail;
 	}
 	
 	/**
 	 * Clears all data
 	 */
 	public void flushAllData() { 
-		//not yet implemented
+		instance = null;
+		this.rooms = null;
+		this.customerBase = null;
+		inServiceFilter = false;
+		kindFilter = null;
+		Lease.resetConfirmationNumbering(0);
 	}
 	
 }

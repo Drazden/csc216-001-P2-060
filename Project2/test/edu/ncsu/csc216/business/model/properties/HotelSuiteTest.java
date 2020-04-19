@@ -156,18 +156,25 @@ public class HotelSuiteTest {
 		} catch (RentalOutOfServiceException e) {
 			fail();
 		}
+
+		try {
+			unit.recordExistingLease(0, client, start, end, 2); 
+		} catch (RentalDateException e) {
+			e.getMessage();
+		} catch (RentalCapacityException e) {
+			fail();
+		} catch (RentalOutOfServiceException e) {
+			fail();
+		}
 		
-//		LocalDate s = LocalDate.of(2021, 2, 5);
-//		
-//		try {
-//			unit.recordExistingLease(0, client, s, s, 10); 
-//		} catch (RentalDateException e) {
-//			fail();
-//		} catch (RentalCapacityException e) {
-//			fail();
-//		} catch (RentalOutOfServiceException e) {
-//			fail();
-//		}
-		
+		try {
+			unit.recordExistingLease(0, client, start.minusWeeks(1), end, 2); 
+		} catch (RentalDateException e) {
+			e.getMessage();
+		} catch (RentalCapacityException e) {
+			fail();
+		} catch (RentalOutOfServiceException e) {
+			fail();
+		}
 	}
 }

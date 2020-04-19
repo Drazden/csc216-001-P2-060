@@ -78,25 +78,17 @@ public class HotelSuite extends RentalUnit {
 				throw new RentalDateException();
 			}
 			
-//			if (nS.equals(e) || e.equals(nS)) {
+//			if (nS.isBefore(s) && nE.isAfter(s)) {
 //				throw new RentalDateException();
 //			}
 //			
-//			if (nE.equals(s) || s.equals(nE)) {
+//			if (nS.isBefore(e) && nE.isAfter(e)) {
 //				throw new RentalDateException();
 //			}
-			
-			if (nS.isBefore(s) && nE.isAfter(s)) {
-				throw new RentalDateException();
-			}
-			
-			if (nS.isBefore(e) && nE.isAfter(e)) {
-				throw new RentalDateException();
-			}
-			
-			if (nS.isAfter(s) && nE.isBefore(e)) {
-				throw new RentalDateException();
-			}
+//			
+//			if (nS.isAfter(s) && nE.isBefore(e)) {
+//				throw new RentalDateException();
+//			}
 			
 		}
 		
@@ -122,6 +114,35 @@ public class HotelSuite extends RentalUnit {
 		Period p = Period.between(start, end);
 		super.checkLeaseConditions(cli, start, p.getDays() + 1, ocu);
 		super.checkDates(start, end);
+		
+		for (int i = 0; i < myLeases.size(); i++) {
+			LocalDate nS = lease.getStart();
+			LocalDate nE = lease.getEnd();
+			LocalDate s = myLeases.get(i).getStart();
+			LocalDate e = myLeases.get(i).getEnd();
+			
+			if (nS.equals(s) || s.equals(nS)) {
+				throw new RentalDateException();
+			}
+			
+			if (nE.equals(e) || e.equals(nE)) {
+				throw new RentalDateException();
+			}
+			
+//			if (nS.isBefore(s) && nE.isAfter(s)) {
+//				throw new RentalDateException();
+//			}
+//			
+//			if (nS.isBefore(e) && nE.isAfter(e)) {
+//				throw new RentalDateException();
+//			}
+//			
+//			if (nS.isAfter(s) && nE.isBefore(e)) {
+//				throw new RentalDateException();
+//			}
+			
+		}
+		
 		
 		myLeases.add(lease);
 		return lease;

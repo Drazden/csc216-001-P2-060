@@ -3,6 +3,7 @@ package edu.ncsu.csc216.business.model.properties;
 import java.time.LocalDate;
 import java.time.Period;
 
+import edu.ncsu.csc216.business.list_utils.SortedLinkedListWithIterator;
 import edu.ncsu.csc216.business.list_utils.SortedList;
 import edu.ncsu.csc216.business.model.contracts.Lease;
 import edu.ncsu.csc216.business.model.stakeholders.Client;
@@ -129,17 +130,17 @@ public class HotelSuite extends RentalUnit {
 				throw new RentalDateException();
 			}
 			
-//			if (nS.isBefore(s) && nE.isAfter(s)) {
-//				throw new RentalDateException();
-//			}
-//			
-//			if (nS.isBefore(e) && nE.isAfter(e)) {
-//				throw new RentalDateException();
-//			}
-//			
-//			if (nS.isAfter(s) && nE.isBefore(e)) {
-//				throw new RentalDateException();
-//			}
+			if (nS.isBefore(s) && nE.isAfter(s)) {
+				throw new RentalDateException();
+			}
+			
+			if (nS.isBefore(e) && nE.isAfter(e)) {
+				throw new RentalDateException();
+			}
+			
+			if (nS.isAfter(s) && nE.isBefore(e)) {
+				throw new RentalDateException();
+			}
 			
 		}
 		
@@ -155,8 +156,17 @@ public class HotelSuite extends RentalUnit {
 	 * @return list of cancelled leases
 	 */
 	public SortedList<Lease> removeFromServiceStarting(LocalDate start) {
-		LocalDate sun = LocalDate.of(start.getYear(), start.getMonth(), start.getDayOfMonth() + 7 - start.getDayOfWeek().getValue());
-		return super.removeFromServiceStarting(sun);
+		SortedLinkedListWithIterator<Lease> cancel = new SortedLinkedListWithIterator<Lease>();
+		for (int i = 0; i < myLeases.size(); i++) {
+			if (myLeases.get(i).getStart().isEqual(start)) {
+				cancel.add(myLeases.get(i));
+				myLeases.remove(i);
+			} else if (myLeases.get(i).getEnd().isAfter(start)) {
+				myLeases.get(i).setEndDateEarlier(start.minusDays(1));
+			}
+		}
+		super.takeOutOfService();
+		return cancel;
 	}
 	
 	/**
@@ -164,7 +174,7 @@ public class HotelSuite extends RentalUnit {
 	 * @return floor, room, capacity, availability
 	 */
 	public String getDescription() {
-		String ret = "Hotel Suite: " + super.getDescription();
+		String ret = "Hotel Suite:    " + super.getDescription();
 		return ret;
 	}
 	

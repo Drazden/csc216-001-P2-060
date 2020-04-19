@@ -27,7 +27,7 @@ public class HotelSuiteTest {
 		assertEquals(10, room.getFloor());
 		assertEquals(10, room.getRoom());
 		assertEquals(true, room.isInService());
-		assertEquals("Hotel Suite: 10-10 | 2", room.getDescription());
+		assertEquals("Hotel Suite:    10-10 | 2", room.getDescription());
 		assertTrue(room.equals(room));
 		assertEquals(0, room.compareTo(room));
 		

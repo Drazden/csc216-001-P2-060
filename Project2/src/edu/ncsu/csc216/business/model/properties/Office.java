@@ -18,10 +18,10 @@ public class Office extends RentalUnit {
 	private static final int MAX_CAPACITY = 150;
 	
 	/** Number of calendar rows **/
-	private static final int CAL_ROWS = 13;
+	private static final int CAL_ROWS = 10;
 	
 	/** Number of calendar columns **/
-	private static final int CAL_COLS = 32;
+	private static final int CAL_COLS = 12;
 	
 	/** Calendar for office **/
 	private int[][] calendar;
@@ -88,10 +88,11 @@ public class Office extends RentalUnit {
 		myLeases.add(lease);
 		
 		current = start;
-		while (!current.equals(end.plusDays(1))) {
-			calendar[current.getMonthValue()][current.getDayOfMonth()] -= ocu;
-			current = current.plusDays(1);
-		}
+		while (!current.getMonth().equals(end.getMonth().plus(1))) {
+			calendar[current.getYear() - 2020][current.getMonthValue() - 1] -= ocu;
+			current = current.plusMonths(1);
+			System.out.println(current);
+		} 
 		
 		
 		
@@ -125,10 +126,11 @@ public class Office extends RentalUnit {
 		}
 		
 		current = start;
-		while (!current.equals(end.plusDays(1))) {
-			calendar[current.getMonthValue()][current.getDayOfMonth()] -= ocu;
-			current = current.plusDays(1);
-		}
+		while (!current.getMonth().equals(end.getMonth().plus(1))) {
+			calendar[current.getYear() - 2020][current.getMonthValue() - 1] -= ocu;
+			current = current.plusMonths(1);
+			System.out.println(current);
+		} 
 		
 		myLeases.add(lease);
 		return lease;
@@ -140,7 +142,7 @@ public class Office extends RentalUnit {
 	 * @return remaining capacity
 	 */
 	protected int remainingCapacityFor(LocalDate date) {
-		return calendar[date.getMonthValue()][date.getDayOfMonth()];
+		return calendar[date.getYear() - 2020][date.getMonthValue() - 1];
 	}
 	
 	/**

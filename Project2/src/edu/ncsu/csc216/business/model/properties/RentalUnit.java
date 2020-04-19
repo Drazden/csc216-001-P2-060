@@ -310,7 +310,7 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 		
 		string = "" + getFloor() + "-" + getRoom() + " | " + cap;
 		if (!isInService()) {
-			string += " | Unavailable";
+			string += " Unavailable";
 		}
 		return string;
 	}

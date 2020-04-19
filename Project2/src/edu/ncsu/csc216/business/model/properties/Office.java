@@ -73,7 +73,7 @@ public class Office extends RentalUnit {
 		LocalDate current = start;
 		while (!current.equals(end.plusDays(1))) {
 			if (remainingCapacityFor(current) + ocu > super.getCapacity()) {
-				throw new RentalDateException();
+				throw new RentalCapacityException();
 			}
 			current = current.plusDays(1);
 		}
@@ -91,9 +91,10 @@ public class Office extends RentalUnit {
 	 * @return new lease
 	 * @throws RentalOutOfServiceException if unit not in service
 	 * @throws RentalDateException if date is invalid
+	 * @throws RentalCapacityException if capacity is breached
 	 */
 	@Override
-	public Lease recordExistingLease(int con, Client cli, LocalDate start, LocalDate end, int ocu) throws RentalOutOfServiceException, RentalDateException {
+	public Lease recordExistingLease(int con, Client cli, LocalDate start, LocalDate end, int ocu) throws RentalOutOfServiceException, RentalDateException, RentalCapacityException {
 		Lease lease = new Lease(con, cli, this, start, end, ocu);
 		Period p = Period.between(start, end);
 		super.checkLeaseConditions(cli, start, p.getDays() + 1, ocu);
@@ -102,7 +103,7 @@ public class Office extends RentalUnit {
 		LocalDate current = start;
 		while (!current.equals(end.plusDays(1))) {
 			if (remainingCapacityFor(current) + ocu > super.getCapacity()) {
-				throw new RentalDateException();
+				throw new RentalCapacityException();
 			}
 			current = current.plusDays(1);
 		}

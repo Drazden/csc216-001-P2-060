@@ -62,7 +62,6 @@ public class Office extends RentalUnit {
 		super.checkLeaseConditions(cli, start, dur, ocu);		
 		RentalUnit me = this;
 		LocalDate end = start.plusMonths(dur).minusDays(1);
-		System.out.println(start + " " + end);
 		
 		checkDates(start, end);
 		
@@ -81,6 +80,15 @@ public class Office extends RentalUnit {
 		}
 		
 		myLeases.add(lease);
+		
+		current = start;
+		while (!current.equals(end.plusDays(1))) {
+			calendar[current.getMonthValue()][current.getDayOfMonth()] = ocu;
+			current = current.plusDays(1);
+		}
+		
+		
+		
 		return lease;
 	}
 
@@ -110,6 +118,11 @@ public class Office extends RentalUnit {
 			current = current.plusDays(1);
 		}
 		
+		current = start;
+		while (!current.equals(end.plusDays(1))) {
+			calendar[current.getMonthValue()][current.getDayOfMonth()] = ocu;
+			current = current.plusDays(1);
+		}
 		
 		myLeases.add(lease);
 		return lease;

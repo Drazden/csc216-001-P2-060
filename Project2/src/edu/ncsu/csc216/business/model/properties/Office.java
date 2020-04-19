@@ -3,6 +3,7 @@ package edu.ncsu.csc216.business.model.properties;
 import java.time.LocalDate;
 import java.time.Period;
 
+import edu.ncsu.csc216.business.list_utils.SortedLinkedListWithIterator;
 import edu.ncsu.csc216.business.list_utils.SortedList;
 import edu.ncsu.csc216.business.model.contracts.Lease;
 import edu.ncsu.csc216.business.model.stakeholders.Client;
@@ -143,11 +144,11 @@ public class Office extends RentalUnit {
 	 * Remaining capacity for date
 	 * @param date to check
 	 * @return remaining capacity
-	 * @throws RentalDateException if date is not in valid range
+	 * @throws IllegalArgumentException if date is not in valid range
 	 */
-	protected int remainingCapacityFor(LocalDate date) throws RentalDateException {
+	protected int remainingCapacityFor(LocalDate date) {
 		if (date.isBefore(LocalDate.of(2020, 1, 1)) || date.isAfter(LocalDate.of(2029, 12, 31))) {
-			throw new RentalDateException();
+			throw new IllegalArgumentException();
 		}
 		
 		return calendar[date.getYear() - 2020][date.getMonthValue() - 1];
@@ -161,7 +162,18 @@ public class Office extends RentalUnit {
 	 */
 	public SortedList<Lease> removeFromServiceStarting(LocalDate start) {
 		LocalDate d = LocalDate.of(start.getYear(), start.getMonth(), 1);
-		return super.removeFromServiceStarting(d);
+		SortedLinkedListWithIterator<Lease> cancel = (SortedLinkedListWithIterator<Lease>) super.removeFromServiceStarting(d);
+		
+		for (int i = 0; i < cancel.size(); i++) {
+			LocalDate current = cancel.get(i).getStart();
+			LocalDate end = cancel.get(i).getEnd();
+			while (!current.getMonth().equals(end.getMonth().plus(1))) {
+				calendar[current.getYear() - 2020][current.getMonthValue() - 1] -= cancel.get(i).getNumOccupants();
+				current = current.plusMonths(1);
+			} 
+		}
+		
+		return cancel;
 	}
 	
 	/**

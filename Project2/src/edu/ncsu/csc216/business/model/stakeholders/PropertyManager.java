@@ -18,7 +18,7 @@ import edu.ncsu.csc216.business.model.properties.RentalUnit;
  * Can add or remove clients or units, filter by type.
  * @author Jacob Robinson
  */
-public class PropertyManager {
+public class PropertyManager implements Landlord {
 
 	/** Earliest date for a lease **/
 	public static final LocalDate EARLIEST_DATE = null;

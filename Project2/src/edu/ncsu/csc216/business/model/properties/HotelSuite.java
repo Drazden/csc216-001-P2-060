@@ -114,11 +114,9 @@ public class HotelSuite extends RentalUnit {
 		Lease lease = new Lease(con, cli, this, start, end, ocu);
 		Period p = Period.between(start, end);
 		super.checkLeaseConditions(cli, start, p.getDays() + 1, ocu);
-		super.checkDates(start, end);
+		checkDates(start, end);
 		
-		if (start.equals(end)) {
-			throw new RentalDateException();
-		}
+		
 		
 		for (int i = 0; i < myLeases.size(); i++) {
 			LocalDate nS = lease.getStart();
@@ -190,6 +188,9 @@ public class HotelSuite extends RentalUnit {
 	 */
 	public void checkDates(LocalDate start, LocalDate end) throws RentalDateException {
 		super.checkDates(start, end);
+		if (start.equals(end)) {
+			throw new RentalDateException();
+		}
 		
 		if (start.getDayOfWeek().getValue() != 7 || end.getDayOfWeek().getValue() != 7) {
 			throw new RentalDateException();

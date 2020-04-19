@@ -17,8 +17,11 @@ public class RentalReaderTest {
 	 */
 	@Test
 	public void testRead() {
+		RentalReader reader = new RentalReader();
+		assertNotEquals(null, reader);
 		try {
-			RentalReader.readRentalData("sample.txt");
+			RentalReader.readRentalData("test-files/sample.txt");
+			
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		}

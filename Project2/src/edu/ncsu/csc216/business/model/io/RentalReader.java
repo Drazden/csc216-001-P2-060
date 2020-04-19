@@ -36,9 +36,14 @@ public class RentalReader {
 		} catch (FileNotFoundException e) {
 			throw new IllegalArgumentException();
 		}
-		while (s.hasNextLine() && s.nextLine().charAt(0) != '#') {
+		while (s.hasNextLine()) {
+			String nextline = s.nextLine();
+			if (nextline.isEmpty() || nextline.charAt(0) == '#') {
+				break;
+			}
+			
 			try {
-				processRoom(s.nextLine());
+				processRoom(nextline);
 			} catch (DuplicateRoomException e) {
 				s.close();
 				throw new IllegalArgumentException();
@@ -46,16 +51,19 @@ public class RentalReader {
 		}
 		
 		while (s.hasNextLine()) {
-			Client client;
-			try {
-				client = processClient(s.nextLine());
-			} catch (DuplicateClientException e) {
-				s.close();
-				throw new IllegalArgumentException();
+			String next = s.nextLine();
+			Client client = null;
+			if (next.charAt(0) != '#') {
+				processLease(client, next);
+			} else {
+				try {
+					client = processClient(next);
+				} catch (DuplicateClientException e) {
+					s.close();
+					throw new IllegalArgumentException();
+				}
 			}
-			while (s.hasNextLine() && s.nextLine().charAt(0) != '#') {
-				processLease(client, s.nextLine());
-			}
+				
 		}
 		
 		s.close();
@@ -63,32 +71,30 @@ public class RentalReader {
 
 	private static void processLease(Client client, String nextLine) {
 		Scanner s = new Scanner(nextLine);
-		int con = s.nextInt();
+		int con = Integer.parseInt(s.next());
 		s.next();
 		LocalDate start = LocalDate.parse(s.next());
 		s.next();
 		LocalDate end = LocalDate.parse(s.next());
 		s.next();
 		int ocu = s.nextInt();
-		
+		s.next();
 		RentalUnit r = null;
 		String kind = s.next();
 		if (kind.equals("Conference")) {
 			s.next();
 			String loc = s.next();
-			s.next();
-			int cap = s.nextInt();
+			int cap = 1;
 			r = new ConferenceRoom(loc, cap);
 		} else if (kind.equals("Hotel")) {
 			s.next();
 			String loc = s.next();
-			s.next();
-			int cap = s.nextInt();
+			int cap = 1;
 			r = new HotelSuite(loc, cap);
 		} else {
 			String loc = s.next();
-			s.next();
-			int cap = s.nextInt();
+
+			int cap = 1;
 			r = new Office(loc, cap);
 		}
 		
@@ -98,12 +104,21 @@ public class RentalReader {
 
 	private static Client processClient(String nextLine) throws DuplicateClientException {
 		Scanner s = new Scanner(nextLine);
-		String name = null;
-		while(s.hasNext() && s.next().charAt(0) != '(') {
-			name += s.next();
+		String name = "";
+		name = s.next().replaceAll("#", "");
+		String id = null;
+		while (s.hasNext()) {
+			String a = s.next();
+			if (a.charAt(0) == '(') {
+				id = a;
+			} else {
+				name += " " + a;
+			}
 		}
-	
-		String id = s.next().substring(1, s.next().length());
+		
+		id = id.substring(1, id.length());
+		
+		
 		s.close();
 		PropertyManager.getInstance().addNewClient(name, id);
 		Client client = new Client(name, id);

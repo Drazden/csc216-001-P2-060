@@ -25,6 +25,32 @@ public class RentalReaderTest {
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		}
+		
+		try {
+			RentalReader.readRentalData("test-files/empty.txt");
+			
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		}
+		
+		
+		try {
+			RentalReader.readRentalData("test-files/clientsonly.txt");
+			
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			RentalReader.readRentalData("test-files/unitsonly.txt");
+			
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		}
+
+		
+		
+		
 	}
 
 }

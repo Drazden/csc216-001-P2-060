@@ -33,12 +33,19 @@ public class RentalReader {
 		Scanner s = null;
 		try {
 			s = new Scanner(new FileInputStream(filename));
+			System.out.println(filename);
 		
+		String pass = null;
 		while (s.hasNextLine()) {
 			String nextline = s.nextLine();
-			if (nextline.isEmpty() || nextline.charAt(0) == '#') {
+			if (nextline.isEmpty()) {
 				break;
 			}
+			if (nextline.charAt(0) == '#') {
+				pass = nextline;
+				break;
+			}
+			 
 			
 			try {
 				processRoom(nextline);
@@ -49,7 +56,13 @@ public class RentalReader {
 		}
 		
 		while (s.hasNextLine()) {
-			String next = s.nextLine();
+			String next = "";
+			if (pass != null) {
+				next = pass;
+				pass = null;
+			} else {
+				next = s.nextLine();
+			}
 			Client client = null;
 			if (next.charAt(0) != '#') {
 				processLease(client, next);
@@ -104,6 +117,8 @@ public class RentalReader {
 	}
 
 	private static Client processClient(String nextLine) throws DuplicateClientException {
+		System.out.println(nextLine);
+
 		Scanner s = new Scanner(nextLine);
 		String name = "";
 		name = s.next().replaceAll("#", "");

@@ -33,9 +33,7 @@ public class RentalReader {
 		Scanner s = null;
 		try {
 			s = new Scanner(new FileInputStream(filename));
-		} catch (FileNotFoundException e) {
-			throw new IllegalArgumentException();
-		}
+		
 		while (s.hasNextLine()) {
 			String nextline = s.nextLine();
 			if (nextline.isEmpty() || nextline.charAt(0) == '#') {
@@ -66,6 +64,9 @@ public class RentalReader {
 				
 		}
 		
+		} catch (FileNotFoundException e) {
+			throw new IllegalArgumentException();
+		}
 		s.close();
 	}
 

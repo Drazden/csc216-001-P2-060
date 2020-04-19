@@ -303,7 +303,12 @@ public abstract class RentalUnit implements Comparable<RentalUnit> {
 	 */
 	public String getDescription() {
 		String string = new String();
-		string = "" + getFloor() + "-" + getRoom() + " | " + getCapacity();
+		String cap = "" + getCapacity();
+		if (cap.length() == 1) {
+			cap = " " + cap;
+		}
+		
+		string = "" + getFloor() + "-" + getRoom() + " | " + cap;
 		if (!isInService()) {
 			string += " | Unavailable";
 		}

@@ -143,8 +143,13 @@ public class Office extends RentalUnit {
 	 * Remaining capacity for date
 	 * @param date to check
 	 * @return remaining capacity
+	 * @throws RentalDateException if date is not in valid range
 	 */
-	protected int remainingCapacityFor(LocalDate date) {
+	protected int remainingCapacityFor(LocalDate date) throws RentalDateException {
+		if (date.isBefore(LocalDate.of(2020, 1, 1)) || date.isAfter(LocalDate.of(2029, 12, 31))) {
+			throw new RentalDateException();
+		}
+		
 		return calendar[date.getYear() - 2020][date.getMonthValue() - 1];
 	}
 	

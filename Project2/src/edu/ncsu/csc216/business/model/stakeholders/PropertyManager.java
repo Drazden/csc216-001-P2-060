@@ -190,7 +190,7 @@ public class PropertyManager {
 	
 	/**
 	 * Creates a new lease
-	 * @param con confirmation number
+	 * @param r idx of rental unnit
 	 * @param cli client
 	 * @param start start date
 	 * @param dur duration
@@ -240,29 +240,21 @@ public class PropertyManager {
 		for (int i = 0; i < rooms.size(); i++) {
 			String unit = rooms.get(i).getDescription();
 			
-			if (inServiceFilter) {
-				if (rooms.get(i).isInService()) {
-					units[i] = unit;
-				}
+			if (inServiceFilter && rooms.get(i).isInService()) {
+				units[i] = unit;
 			}
 			
 			if (kindFilter != null && !kindFilter.isEmpty()) {
-				if (kindFilter.toUpperCase().equals("H")) {
-					if(unit.contains("Hotel")) {
-						units[i] = unit;
-					}
+				if (kindFilter.toUpperCase().equals("H") && unit.contains("Hotel")) {
+					units[i] = unit;
 				}
 				
-				if (kindFilter.toUpperCase().equals("C")) {
-					if(unit.contains("Conference")) {
-						units[i] = unit;
-					}
+				if (kindFilter.toUpperCase().equals("C") && unit.contains("Conference")) {
+					units[i] = unit;
 				}
 				
-				if (kindFilter.toUpperCase().equals("O")) {
-					if(unit.contains("Office")) {
-						units[i] = unit;
-					}
+				if (kindFilter.toUpperCase().equals("O") && unit.contains("Office")) {
+					units[i] = unit;
 				}
 			}
 			

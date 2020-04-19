@@ -6,9 +6,7 @@ import java.time.LocalDate;
 
 import org.junit.Test;
 
-import edu.ncsu.csc216.business.model.contracts.Lease;
 import edu.ncsu.csc216.business.model.properties.HotelSuite;
-import edu.ncsu.csc216.business.model.properties.Office;
 import edu.ncsu.csc216.business.model.properties.RentalCapacityException;
 import edu.ncsu.csc216.business.model.properties.RentalDateException;
 import edu.ncsu.csc216.business.model.properties.RentalOutOfServiceException;

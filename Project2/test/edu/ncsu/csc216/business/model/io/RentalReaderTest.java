@@ -2,7 +2,6 @@ package edu.ncsu.csc216.business.model.io;
 
 import static org.junit.Assert.*;
 
-import java.io.FileNotFoundException;
 
 import org.junit.Test;
 /**

@@ -184,7 +184,7 @@ public class Office extends RentalUnit {
 	 */
 	protected static int getMonthsDuration(LocalDate start, LocalDate end) {
 		Period p = Period.between(start, end);
-		return (p.getYears() * 12) + p.getMonths() + 1;
+		return p.getYears() * 12 + p.getMonths() + 1;
 	}
 	
 	/**
